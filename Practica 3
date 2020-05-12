@@ -101,7 +101,7 @@ img=cv2.imread('hist10_1.jpg', cv2.IMREAD_GRAYSCALE)
 img2=cv2.imread('hist10_1.jpg', cv2.IMREAD_GRAYSCALE)
 img3=cv2.imread('prueba.jpg', cv2.IMREAD_GRAYSCALE)
 
-fils,cols=img.shape
+fils,cols=img3.shape
 lista=[0]*256
 cont=fils*cols
 
