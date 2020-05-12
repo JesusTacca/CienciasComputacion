@@ -86,7 +86,7 @@ plt.subplot(2,2,2).hist(img.ravel(),256,[0,256])
 crop_img = img[a:b, c:d]
 plt.subplot(2,2,3),plt.imshow(img2,'gray')
 plt.subplot(2,2,4).hist(img2.ravel(),256,[0,256])
-cv2.imwrite('subimagen.jpg',crop_img)
+cv2.imwrite('prueba.jpg',crop_img)
 plt.show()
 
 ### Ejercicio 2 subimagen
@@ -132,6 +132,5 @@ plt.subplot(2,2,1),plt.imshow(img3,'gray')
 plt.subplot(2,2,2).hist(img3.ravel(),256,[0,256])
 plt.subplot(2,2,3),plt.imshow(img2,'gray')
 plt.subplot(2,2,4).hist(img2.ravel(),256,[0,256])
-#cv2.imwrite('h2.jpg',img2)
 plt.show()
 
