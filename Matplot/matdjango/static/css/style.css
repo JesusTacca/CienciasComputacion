@@ -1,0 +1,126 @@
+.contenedor {
+  justify-content: center;
+  padding: 20px;
+  height: 100vh;
+	position: relative;
+	width: 100%;
+	max-width: 400px;
+}
+image{
+  border: 3px dashed tomato;
+  left:
+}
+.contenedor .button1 {
+  position: absolute;
+  top: 50%;
+  left: 120%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+	background-color: #4CAF50;
+	border: none;
+	padding: 15px 32px;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+}
+.contenedor .button2 {
+  position: absolute;
+  top: 40%;
+  left: 120%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+	background-color: #4CAF50;
+	border: none;
+	padding: 15px 32px;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+}
+.contenedor .button3 {
+  position: absolute;
+  top: 30%;
+  left: 120%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+	background-color: #4CAF50;
+	border: none;
+	padding: 15px 32px;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+}
+.contenedor .button4 {
+  position: absolute;
+  top: 20%;
+  left: 120%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+	background-color: #4CAF50;
+	border: none;
+	padding: 15px 32px;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+}
+.button_porc1 {
+  position: absolute;
+  top: 70%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+	background-color: #4CAF50;
+	border: none;
+	padding: 15px 32px;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+}
+.button_porc2{
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+	background-color: #4CAF50;
+	border: none;
+	padding: 15px 32px;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+}

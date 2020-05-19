@@ -1,26 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <LINK REL=StyleSheet HREF="style.css" TYPE="text/css">
+    <LINK REL=StyleSheet HREF="{% static 'css/style.css' %}" TYPE="text/css">
     <title>matplot</title>
   </head>
   <body>
-      <div id="contenedor">
+      <div class="contenedor">
         <div><img  src="data:image/png;base64,{{data}}" alt="" height="250", width="350"></div>
-      </div>
       <p>Ecualizacion</p>
       <form action='home' method='GET'>
-        <button type="submit" style="position: absolute;top: 10%;left: 50%;">Thresholding</button>
+        <button class="button1" type="submit">Thresholding</button>
       </form>
       <form action='contrastar' method='GET'>
-        <button type="submit" style="position: absolute;top: 20%;left: 50%;">Contrast</button>
+        <button class="button2" type="submit">Contrast</button>
       </form>
       <form action='logaritmear' method='GET'>
-        <button type="submit" style="position: absolute;top: 30%;left: 50%;">Logaritmo</button>
+        <button class="button3" type="submit">Logaritmo</button>
       </form>
       <form action='exponenciar' method='GET'>
-        <button type="submit" style="position: absolute;top: 40%;left: 50%;">Exponencial</button>
+        <button class="button4" type="submit">Exponencial</button>
       </form>
+      <div>
+        <input type="text" value="">
+        <label for="x1">x1</label>
+        <input type="text" value="">
+        <label for="y1">y1</label>
+        <input type="text" value="">
+        <label for="x2">x2</label>
+        <input type="text" value="">
+        <label for="y2">y2</label>
+      </div>
+      </div>
   </body>
 </html>
