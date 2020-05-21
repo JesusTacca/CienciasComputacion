@@ -6,12 +6,15 @@ from . import views
 
 urlpatterns = [
     path('',views.home, name="home"),
-    path('ecualizar',views.funct1),
-    path('contrastar',views.funct2),
-    path('logaritmear',views.funct3),
-    path('exponenciar',views.funct4),
+    path('thresholding',views.thresholding),
+    path('Contrast',views.Contrast),
+    path('Ecualizacion',views.Ecualizacion),
+    path('Logaritmo',views.Logaritmo),
+    path('Raiz',views.Raiz),
+    path('Exponencial',views.Exponencial),
+    path('topower',views.raisepower),
     path('home',views.home),
-    path('image_upload', views.hotel_image_view, name = 'image_upload'),
+    path('image_upload', views.image_upload, name = 'image_upload'),
     path('success', views.success, name = 'success'),
 ]
 

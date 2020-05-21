@@ -11,85 +11,74 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 
 def home(request):
+    return render(request,'home.html')#,{'data':urls})
+
+def thresholding(request):
     img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
     fils,cols=img.shape
-    p=[0]*256
-    c=70
     for x in range(fils):
         for y in range(cols):
-            p=c*math.log(1+img.item(x,y),10)
-            if p>255:
-                p=255
-            if p<0:
-                p=0
-            img2.itemset((x,y),int(p))
-    plt.imshow(img2,'gray')
-    #plt.plot(range(10))
-    fig =plt.gcf()
+            if img.item(x,y)<=194 and 175<=img.item(x,y):
+                img2.itemset((x, y), 255)
+            else:
+                img2.itemset((x, y), 0)
+    return render(request,'thresholding.html')
 
-    buf=io.BytesIO()
-    fig.savefig(buf,format='png')
-    buf.seek(0)
-    string = base64.b64encode(buf.read())
-    uri = urllib.parse.quote(string)
-
-    return render(request,'home.html',{'data':uri})
-
-def funct1(request):
+def Contrast(request):
     img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
-    fils,cols=img.shape
-    p=[0]*256
-    c=70
+    a=0
+    b=255
+    c=255
+    d=0
+    fils,cols=img2.shape
     for x in range(fils):
         for y in range(cols):
-            p=c*math.log(1+img.item(x,y),10)
-            if p>255:
-                p=255
-            if p<0:
-                p=0
-            img2.itemset((x,y),int(p))
-    plt.imshow(img2,'gray')
-    #plt.plot(range(10))
-    fig =plt.gcf()
-
-    buf=io.BytesIO()
-    fig.savefig(buf,format='png')
-    buf.seek(0)
-    string = base64.b64encode(buf.read())
-    uri = urllib.parse.quote(string)
-
-    return render(request,'ecualizacion.html')
-def funct2(request):
-    img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
-    img2=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
-    fils,cols=img.shape
-    p=[0]*256
-    c=70
+            if c>img2.item(x,y):
+                c=img2.item(x,y)
+            if d<img2.item(x,y):
+                d=img2.item(x,y)
     for x in range(fils):
         for y in range(cols):
-            p=c*math.log(1+img.item(x,y),10)
-            if p>255:
-                p=255
-            if p<0:
-                p=0
-            img2.itemset((x,y),int(p))
-    plt.imshow(img2,'gray')
-    #plt.plot(range(10))
-    fig =plt.gcf()
-
-    buf=io.BytesIO()
-    fig.savefig(buf,format='png')
-    buf.seek(0)
-    string = base64.b64encode(buf.read())
-    uri = urllib.parse.quote(string)
+            t=(img2.item(x,y)-c)*((b-a)/(d-c))+a
+            img2.itemset((x, y), t)
 
     return render(request,'contrast.html')
-def funct3(request):
+
+def Ecualizacion(request):
+    img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
+    fils,cols=img2.shape
+    lista=[0]*256
+    cont=fils*cols
+    for x in range(fils):
+        for y in range(cols):
+            lista[img2.item(x,y)]=lista[img2.item(x,y)]+1
+
+    L=256
+    pp=[0]*256
+    for i in range (256):
+        pp[i]=lista[i]/cont
+    nueva=[0]*256
+    for i in range (256):
+        suma=0
+        for j in range(i+1):
+            suma=suma+pp[j]
+        suma=math.floor(suma*(L-1))
+        nueva[i]=suma
+
+    for x in range(fils):
+        for y in range(cols):
+            img2.itemset((x,y),nueva[img2.item(x,y)])
+
+    return render(request,'ecualizacion.html')
+
+def Logaritmo(request):
     img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
     fils,cols=img.shape
+    cont=fils*cols
     p=[0]*256
     c=70
     for x in range(fils):
@@ -100,26 +89,71 @@ def funct3(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
-    plt.imshow(img2,'gray')
-    #plt.plot(range(10))
-    fig =plt.gcf()
-
-    buf=io.BytesIO()
-    fig.savefig(buf,format='png')
-    buf.seek(0)
-    string = base64.b64encode(buf.read())
-    uri = urllib.parse.quote(string)
 
     return render(request,'logarithm.html')
-def funct4(request):
+
+def Raiz(request):
     img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
     fils,cols=img.shape
+    cont=fils*cols
+
+
     p=[0]*256
-    c=70
+    c=40
     for x in range(fils):
         for y in range(cols):
-            p=c*math.log(1+img.item(x,y),10)
+            p=c*math.sqrt(img.item(x,y))
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img2.itemset((x,y),int(p))
+
+    plt.imshow(img2,'gray')
+    #plt.plot(range(10))
+    fig =plt.gcf()
+
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+
+    return render(request,'raiz.html')
+
+def Exponencial(request):
+    img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
+    fils,cols=img.shape
+    cont=fils*cols
+
+
+    p=[0]*256
+    c=20
+    b=1.01
+    for x in range(fils):
+        for y in range(cols):
+            p=c*(pow(b,img.item(x,y))-1)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img2.itemset((x,y),int(p))
+
+    return render(request,'exponencial.html')
+
+def raisepower(request):
+    img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
+    fils,cols=img.shape
+    cont=fils*cols
+    p=[0]*256
+    c=0.1
+    r=1.5
+    for x in range(fils):
+        for y in range(cols):
+            p=c*pow(img.item(x,y),r)
             if p>255:
                 p=255
             if p<0:
@@ -135,8 +169,9 @@ def funct4(request):
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
 
-    return render(request,'exponencial.html')
-def hotel_image_view(request):
+    return render(request,'raisetopower.html')
+
+def image_upload(request):
 
     if request.method == 'POST':
         form = HotelForm(request.POST, request.FILES)
@@ -150,4 +185,4 @@ def hotel_image_view(request):
 
 
 def success(request):
-    return HttpResponse('successfully uploaded')
+    return HttpResponse('Subido Correctamente')
