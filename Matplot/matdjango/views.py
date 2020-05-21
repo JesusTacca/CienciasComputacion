@@ -4,6 +4,11 @@ import math
 from matplotlib import pyplot as plt
 import io
 import urllib, base64
+from .forms import *
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
 
 def home(request):
     img=cv2.imread('matdjango/Imagenes/log_1.jpg', cv2.IMREAD_GRAYSCALE)
@@ -129,5 +134,20 @@ def funct4(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
-    
+
     return render(request,'exponencial.html')
+def hotel_image_view(request):
+
+    if request.method == 'POST':
+        form = HotelForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('success')
+    else:
+        form = HotelForm()
+    return render(request, 'home.html', {'form' : form})
+
+
+def success(request):
+    return HttpResponse('successfully uploaded')
