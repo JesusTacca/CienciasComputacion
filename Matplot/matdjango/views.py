@@ -13,7 +13,6 @@ global jug
 jug='como_lo_supiste.jpg'
 def home(request):
     return render(request,'home.html')#,{'data':urls})
-
 def thresholding(request):
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
