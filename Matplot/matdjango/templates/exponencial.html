@@ -1,37 +1,57 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
+
   <head>
+
     <meta charset="utf-8">
     <LINK REL=StyleSheet HREF="{% static 'css/style.css' %}" TYPE="text/css">
     <title>matplot</title>
+
   </head>
   <body>
-      <div class="contenedor">
-        <div><img  src="data:image/png;base64,{{data}}" alt="" height="250", width="350"></div>
-      <p>Exponencial</p>
 
+      <div class="contenedor">
+
+        <div><img  src="data:image/png;base64,{{data}}" alt="" height="250", width="350"></div>
+
+      <p>Exponencial</p>
       <form action='home' method = 'GET'>
+
         <button class='button10' type="submit">Regreso Home</button>
+
       </form>
       <form method="POST" action="Exponencial_custom">
+
             {% csrf_token %}
             <h1>Valor de funcion Exponencial</h1><br>
+
         <table>
+
+            <!-- En tabla se encuentran los input para lo datos que pueden variar dentro de la funcion -->
             <tr>
+
+                <!-- Recupera el valor de la variable C que varia en la funcion -->
                 <td><label for="valorC">valor C</label></td>
                 <td><input type="text" name="valorC" id="valorC" required ></td>
+
             </tr>
             <tr>
+
                 <td></td>
                 <td><input type="submit" value="Modificar"></td>
+
             </tr>
+
         </table>
+
       </form>
       </div>
       <div>
+
         <input type="text" value="">
         <label for="Cex">valor de C</label>
+
       </div>
   </body>
 </html>

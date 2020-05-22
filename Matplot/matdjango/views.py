@@ -11,13 +11,23 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 global jug
+
+
 jug='neko113.jpg'
+
+
+#retorno a pagina de inicio
 def home(request):
     return render(request,'home.html')#,{'data':urls})
 
+
+#Funcion thresholding por defecto
 def thresholding(request):
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #funcion de thresholding
     fils,cols=img.shape
     for x in range(fils):
         for y in range(cols):
@@ -25,6 +35,8 @@ def thresholding(request):
                 img2.itemset((x, y), 255)
             else:
                 img2.itemset((x, y), 0)
+    #fin de la funcion
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -34,22 +46,30 @@ def thresholding(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualizar la pagina de la funcion
     return render(request,'thresholding.html',{'data':uri})
 
+#funcion customisada de thresholding
 def thre1(request):
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
-    print(request.POST['valor1'])
-    print(request.POST['valor2'])
+
+    #lectura de variables
     fils,cols=img.shape
     a=int(request.POST['valor1'])
     b=int(request.POST['valor2'])
+
+    #funcion thresholding
     for x in range(fils):
         for y in range(cols):
             if img.item(x,y)<=b and a<=img.item(x,y):
                 img2.itemset((x, y), 255)
             else:
                 img2.itemset((x, y), 0)
+    #fin de la funcion
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -59,11 +79,17 @@ def thre1(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualizar la pagina de la funcion
     return render(request,'thresholding.html',{'data':uri})
 
 def Contrast(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #funcion contrast stretching
     a=0
     b=255
     c=255
@@ -79,6 +105,8 @@ def Contrast(request):
         for y in range(cols):
             t=(img2.item(x,y)-c)*((b-a)/(d-c))+a
             img2.itemset((x, y), t)
+    #fin de la funcion
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -88,11 +116,17 @@ def Contrast(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualiza la pagina de la funcion
     return render(request,'contrast.html',{'data':uri})
 
 def Contrast_custom(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #lectura de variables
     a=0
     b=255
     print(request.POST['valor1'])
@@ -104,6 +138,7 @@ def Contrast_custom(request):
     lista=[0]*256
     cont=fils*cols
 
+    #funcion contrast stretching customisada
     for x in range(fils):
         for y in range(cols):
             lista[img.item(x,y)]=lista[img.item(x,y)]+1
@@ -126,6 +161,8 @@ def Contrast_custom(request):
             if t>255:
                 t=255
             img2.itemset((x, y), t)
+    #fin de la funcion
+
 
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
@@ -136,11 +173,17 @@ def Contrast_custom(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualiza la pagina de la funcion
     return render(request,'contrast.html',{'data':uri})
 
 def Ecualizacion(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #funcion Ecualizacion
     fils,cols=img2.shape
     lista=[0]*256
     cont=fils*cols
@@ -163,6 +206,9 @@ def Ecualizacion(request):
     for x in range(fils):
         for y in range(cols):
             img2.itemset((x,y),nueva[img2.item(x,y)])
+    #fin de la funcion
+
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -172,12 +218,17 @@ def Ecualizacion(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualiza la pagina de la funcion
     return render(request,'ecualizacion.html',{'data':uri})
 
 def Ecualizacion_custom(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
 
+    #lectura de variables
     a=int(request.POST['valorx1'])
     b=int(request.POST['valorx2'])
     c=int(request.POST['valory1'])
@@ -189,6 +240,8 @@ def Ecualizacion_custom(request):
     croppedImage = img[c:d, a:b]
     img3= cv2.resize(croppedImage, (cols, fils))
     #cv2.imwrite('prueba4.jpg',img3)
+
+    #funcion Ecualizacion customisada
     for x in range(fils):
         for y in range(cols):
             lista[img3.item(x,y)]=lista[img3.item(x,y)]+1
@@ -209,6 +262,8 @@ def Ecualizacion_custom(request):
     for x in range(fils):
         for y in range(cols):
             img2.itemset((x,y),nueva[img.item(x,y)])
+    #fin de la funcion
+
 
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
@@ -219,11 +274,17 @@ def Ecualizacion_custom(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualiza la pagina de la funcion
     return render(request,'ecualizacion.html',{'data':uri})
 
 def Logaritmo(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #funcion logarithm
     fils,cols=img.shape
     cont=fils*cols
     p=[0]*256
@@ -236,6 +297,8 @@ def Logaritmo(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
+    #fin de la funcion
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -245,15 +308,23 @@ def Logaritmo(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualiza la pagina de la funcion
     return render(request,'logarithm.html',{'data':uri})
 
 def Logaritmo_custom(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #lectura de variables
+    c=int(request.POST['valorC'])
+
+    #funcion Logaritmo customisada
     fils,cols=img.shape
     cont=fils*cols
     p=[0]*256
-    c=int(request.POST['valorC'])
     for x in range(fils):
         for y in range(cols):
             p=c*math.log(1+img.item(x,y),10)
@@ -262,6 +333,8 @@ def Logaritmo_custom(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
+    #fin de la funcion
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -271,15 +344,20 @@ def Logaritmo_custom(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualiza la pagina de la funcion
     return render(request,'logarithm.html',{'data':uri})
 
 def Raiz(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+
+    #funcion raiz
     fils,cols=img.shape
     cont=fils*cols
-
-
     p=[0]*256
     c=40
     for x in range(fils):
@@ -290,6 +368,7 @@ def Raiz(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
+    #fin de la funcion
 
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
@@ -301,17 +380,22 @@ def Raiz(request):
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
 
+    #actualiza la pagina de la funcion
     return render(request,'raiz.html',{'data':uri})
 
 def Raiz_custom(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #lectura de las variables
+    c=int(request.POST['valorC'])
+
+    #funcion raiz customisada
     fils,cols=img.shape
     cont=fils*cols
-
-
     p=[0]*256
-    c=int(request.POST['valorC'])
     for x in range(fils):
         for y in range(cols):
             p=c*math.sqrt(img.item(x,y))
@@ -320,6 +404,8 @@ def Raiz_custom(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
+    #fin de la funcion
+
 
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
@@ -331,15 +417,18 @@ def Raiz_custom(request):
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
 
+    #actualiza la pagina de la funcion
     return render(request,'raiz.html',{'data':uri})
 
 def Exponencial(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #funcion exponencial
     fils,cols=img.shape
     cont=fils*cols
-
-
     p=[0]*256
     c=20
     b=1.01
@@ -351,6 +440,8 @@ def Exponencial(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
+    #fin de la funcion
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -360,18 +451,24 @@ def Exponencial(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualiza la pagina de la funcion
     return render(request,'exponencial.html',{'data':uri})
 
 def Exponencial_custom(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #lectura de variables
+    c=int(request.POST['valorC'])
+
+    #funcion Exponencial customisada
+    b=1.01
     fils,cols=img.shape
     cont=fils*cols
-
-
     p=[0]*256
-    c=int(request.POST['valorC'])
-    b=1.01
     for x in range(fils):
         for y in range(cols):
             p=c*(pow(b,img.item(x,y))-1)
@@ -380,6 +477,8 @@ def Exponencial_custom(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
+    #fin de la funcion
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -389,11 +488,17 @@ def Exponencial_custom(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+
+    #actualiza la pagina de la funcion
     return render(request,'exponencial.html',{'data':uri})
 
 def raisepower(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #funcion raisepower
     fils,cols=img.shape
     cont=fils*cols
     p=[0]*256
@@ -407,6 +512,9 @@ def raisepower(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
+    #in de la funcion
+
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -416,16 +524,23 @@ def raisepower(request):
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
 
+    #actualiza la pagina de la funcion
     return render(request,'raisetopower.html',{'data':uri})
 
 def raisepower_custom(request):
+
+    #lectura de imagenes
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    #lectura de variables
+    c=int(request.POST['valorC'])
+
+    #funcion raisepower customisada
+    p=[0]*256
+    r=1.5
     fils,cols=img.shape
     cont=fils*cols
-    p=[0]*256
-    c=int(request.POST['valorC'])
-    r=1.5
     for x in range(fils):
         for y in range(cols):
             p=c*pow(img.item(x,y),r)
@@ -434,6 +549,9 @@ def raisepower_custom(request):
             if p<0:
                 p=0
             img2.itemset((x,y),int(p))
+    #fin de la funcion
+
+    
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -443,6 +561,7 @@ def raisepower_custom(request):
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
 
+    #actualiza la pagina de la funcion
     return render(request,'raisetopower.html',{'data':uri})
 
 def image_upload(request):

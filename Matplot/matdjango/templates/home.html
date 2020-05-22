@@ -1,34 +1,54 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
+
   <head>
+
     <meta charset="utf-8">
     <LINK REL=StyleSheet HREF="{% static 'css/style.css' %}" TYPE="text/css">
     <title>matplot</title>
+
   </head>
   <body>
+
       <div class="contenedor">
+
          <div><img  src="data:image/png;base64,{{data}}" alt="" height="250", width="350"></div>
+
         <form action='thresholding' method='GET'>
+
           <button class="button1" type="submit" >thresholding</button>
+
         </form>
         <form action='Contrast' method='GET'>
+
           <button class="button2" type="submit" >Contrast</button>
+
         </form>
         <form action='Ecualizacion' method='GET'>
+
           <button class="button3" type="submit">Ecualizacion</button>
+
         </form>
         <form action='Logaritmo' method='GET'>
+
           <button class="button4" type="submit" >Logaritmo</button>
+
         </form>
         <form action='Raiz' method='GET'>
+
           <button class="button5" type="submit">Raiz</button>
+
         </form>
         <form action='Exponencial' method='GET'>
+
           <button class="button6" type="submit" >Exponencial</button>
+
         </form>
         <form action='topower' method='GET'>
+
           <button class="button7" type="submit" >topower</button>
+
         </form>
         <br>
         <form action='image_upload' method = "post" enctype="multipart/form-data">
@@ -36,10 +56,11 @@
         {{ form.as_p }}
         <button type="submit">Upload</button>
         </br>
+
       </div>
       <p>thresholding</p>
 
-
   </body>
+  
 </html>
 <!--data:image/png;base64,{{data}}-->
