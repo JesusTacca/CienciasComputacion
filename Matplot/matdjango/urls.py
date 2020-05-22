@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = [
     path('',views.home, name="home"),
+    path('func1',views.thre1),
     path('thresholding',views.thresholding),
     path('Contrast',views.Contrast),
     path('Ecualizacion',views.Ecualizacion),

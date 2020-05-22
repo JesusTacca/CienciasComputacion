@@ -35,6 +35,31 @@ def thresholding(request):
     uri = urllib.parse.quote(string)
     return render(request,'thresholding.html',{'data':uri})
 
+def thre1(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    print(request.POST['valor1'])
+    print(request.POST['valor2'])
+    fils,cols=img.shape
+    a=int(request.POST['valor1'])
+    b=int(request.POST['valor2'])
+    for x in range(fils):
+        for y in range(cols):
+            if img.item(x,y)<=b and a<=img.item(x,y):
+                img2.itemset((x, y), 255)
+            else:
+                img2.itemset((x, y), 0)
+    plt.imshow(img2,'gray')
+    #plt.plot(range(10))
+    fig =plt.gcf()
+
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return render(request,'thresholding.html',{'data':uri})
+
 def Contrast(request):
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
