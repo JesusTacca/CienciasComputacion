@@ -10,9 +10,10 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 global jug
-jug='como_lo_supiste.jpg'
+jug='logo.png'
 def home(request):
     return render(request,'home.html')#,{'data':urls})
+
 def thresholding(request):
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
@@ -223,4 +224,5 @@ def image_upload(request):
 
 
 def success(request):
-    return HttpResponse('Subido Correctamente')
+    return render(request, 'home.html')
+    #return HttpResponse('Subido Correctamente')
