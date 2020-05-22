@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import cv2
 import math
+import numpy as np
 from matplotlib import pyplot as plt
 import io
 import urllib, base64
@@ -10,7 +11,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 global jug
-jug='logo.png'
+jug='neko113.jpg'
 def home(request):
     return render(request,'home.html')#,{'data':urls})
 
@@ -89,6 +90,54 @@ def Contrast(request):
     uri = urllib.parse.quote(string)
     return render(request,'contrast.html',{'data':uri})
 
+def Contrast_custom(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    a=0
+    b=255
+    print(request.POST['valor1'])
+    print(request.POST['valor2'])
+    min=int(request.POST['valor1'])
+    max=int(request.POST['valor2'])
+    fils,cols=img2.shape
+
+    lista=[0]*256
+    cont=fils*cols
+
+    for x in range(fils):
+        for y in range(cols):
+            lista[img.item(x,y)]=lista[img.item(x,y)]+1
+
+    lista2=[]
+    for i in range(len(lista)):
+        lista2=lista2+[i]*lista[i]
+    print(len(lista2),cont)
+    x=min*cont/100
+    y=max*cont/100
+    print(x,y)
+    c=lista2[round(x)]
+    d=lista2[round(y)]
+    print(c,d)
+    for x in range(fils):
+        for y in range(cols):
+            t=(img.item(x,y)-c)*((b-a)/(d-c))+a
+            if t<0:
+                t=0
+            if t>255:
+                t=255
+            img2.itemset((x, y), t)
+
+    plt.imshow(img2,'gray')
+    #plt.plot(range(10))
+    fig =plt.gcf()
+
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return render(request,'contrast.html',{'data':uri})
+
 def Ecualizacion(request):
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
@@ -114,6 +163,53 @@ def Ecualizacion(request):
     for x in range(fils):
         for y in range(cols):
             img2.itemset((x,y),nueva[img2.item(x,y)])
+    plt.imshow(img2,'gray')
+    #plt.plot(range(10))
+    fig =plt.gcf()
+
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return render(request,'ecualizacion.html',{'data':uri})
+
+def Ecualizacion_custom(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+
+    a=int(request.POST['valorx1'])
+    b=int(request.POST['valorx2'])
+    c=int(request.POST['valory1'])
+    d=int(request.POST['valory2'])
+    fils,cols=img.shape
+    lista=[0]*256
+    cont=fils*cols
+
+    croppedImage = img[c:d, a:b]
+    img3= cv2.resize(croppedImage, (cols, fils))
+    #cv2.imwrite('prueba4.jpg',img3)
+    for x in range(fils):
+        for y in range(cols):
+            lista[img3.item(x,y)]=lista[img3.item(x,y)]+1
+
+    L=256
+    pp=[0]*256
+    for i in range (256):
+        pp[i]=lista[i]/cont
+    nueva=[0]*256
+    print(sum(pp))
+    for i in range (256):
+        suma=0
+        for j in range(i+1):
+            suma=suma+pp[j]
+        suma=math.floor(suma*(L-1))
+        nueva[i]=suma
+
+    for x in range(fils):
+        for y in range(cols):
+            img2.itemset((x,y),nueva[img.item(x,y)])
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
@@ -151,6 +247,32 @@ def Logaritmo(request):
     uri = urllib.parse.quote(string)
     return render(request,'logarithm.html',{'data':uri})
 
+def Logaritmo_custom(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    fils,cols=img.shape
+    cont=fils*cols
+    p=[0]*256
+    c=int(request.POST['valorC'])
+    for x in range(fils):
+        for y in range(cols):
+            p=c*math.log(1+img.item(x,y),10)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img2.itemset((x,y),int(p))
+    plt.imshow(img2,'gray')
+    #plt.plot(range(10))
+    fig =plt.gcf()
+
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return render(request,'logarithm.html',{'data':uri})
+
 def Raiz(request):
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
@@ -160,6 +282,36 @@ def Raiz(request):
 
     p=[0]*256
     c=40
+    for x in range(fils):
+        for y in range(cols):
+            p=c*math.sqrt(img.item(x,y))
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img2.itemset((x,y),int(p))
+
+    plt.imshow(img2,'gray')
+    #plt.plot(range(10))
+    fig =plt.gcf()
+
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+
+    return render(request,'raiz.html',{'data':uri})
+
+def Raiz_custom(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    fils,cols=img.shape
+    cont=fils*cols
+
+
+    p=[0]*256
+    c=int(request.POST['valorC'])
     for x in range(fils):
         for y in range(cols):
             p=c*math.sqrt(img.item(x,y))
@@ -210,6 +362,35 @@ def Exponencial(request):
     uri = urllib.parse.quote(string)
     return render(request,'exponencial.html',{'data':uri})
 
+def Exponencial_custom(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    fils,cols=img.shape
+    cont=fils*cols
+
+
+    p=[0]*256
+    c=int(request.POST['valorC'])
+    b=1.01
+    for x in range(fils):
+        for y in range(cols):
+            p=c*(pow(b,img.item(x,y))-1)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img2.itemset((x,y),int(p))
+    plt.imshow(img2,'gray')
+    #plt.plot(range(10))
+    fig =plt.gcf()
+
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return render(request,'exponencial.html',{'data':uri})
+
 def raisepower(request):
     img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
     img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
@@ -217,6 +398,33 @@ def raisepower(request):
     cont=fils*cols
     p=[0]*256
     c=0.1
+    r=1.5
+    for x in range(fils):
+        for y in range(cols):
+            p=c*pow(img.item(x,y),r)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img2.itemset((x,y),int(p))
+    plt.imshow(img2,'gray')
+    #plt.plot(range(10))
+    fig =plt.gcf()
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+
+    return render(request,'raisetopower.html',{'data':uri})
+
+def raisepower_custom(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('matdjango/Imagenes/images/'+jug, cv2.IMREAD_GRAYSCALE)
+    fils,cols=img.shape
+    cont=fils*cols
+    p=[0]*256
+    c=int(request.POST['valorC'])
     r=1.5
     for x in range(fils):
         for y in range(cols):
