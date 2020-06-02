@@ -3,8 +3,8 @@ import random
 import numpy as np
 from matplotlib import pyplot as plt
 
-img=cv2.imread('sub_10.jpg')
-img2=cv2.imread('sub_11.jpg')
+img=cv2.imread('sub_2.jpg')
+img2=cv2.imread('sub_1.jpg')
 
 #tamaño
 a=len(img)
