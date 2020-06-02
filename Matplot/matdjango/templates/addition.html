@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+    <LINK REL=StyleSheet HREF="{% static 'css/style.css' %}" TYPE="text/css">
+    <title>matplot</title>
+
+  </head>
+  <body>
+
+      <div class="contenedor">
+
+        <div><img  src="data:image/png;base64,{{data}}" alt="" height="250", width="350"></div>
+
+      <p>Addition</p>
+
+      <form action='home' method = 'GET'>
+
+        <button class='button10' type="submit">Regreso Home</button>
+
+      </form>
+      <form method="POST" action="Subtraction_custom">
+
+            {% csrf_token %}
+            <h1>Porcentajes de limitacion</h1><br>
+
+            <table>
+                <tr>
+                  <form action='image_upload' method = "post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit">Upload</button>
+                </tr>
+                <tr>
+                  <form action='image_upload' method = "post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit">Upload</button>
+                </tr>
+                <tr>
+
+                    <td></td>
+                    <td><input type="submit" value="Modificar"></td>
+
+                </tr>
+            </table>
+
+      </form>
+
+  </body>
+
+</html>
