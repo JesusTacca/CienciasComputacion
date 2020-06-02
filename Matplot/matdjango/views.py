@@ -38,6 +38,7 @@ def thresholding(request):
     #fin de la funcion
 
     plt.imshow(img2,'gray')
+
     #plt.plot(range(10))
     fig =plt.gcf()
 
@@ -79,6 +80,8 @@ def thre1(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
+    cv2.imwrite('matdjango/Imagenes/images/temp.jpg',img2)
+    print(12345659)
 
     #actualizar la pagina de la funcion
     return render(request,'thresholding.html',{'data':uri})
@@ -551,7 +554,7 @@ def raisepower_custom(request):
             img2.itemset((x,y),int(p))
     #fin de la funcion
 
-    
+
     plt.imshow(img2,'gray')
     #plt.plot(range(10))
     fig =plt.gcf()
