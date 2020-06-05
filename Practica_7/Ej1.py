@@ -8,7 +8,7 @@ img=cv2.imread('mul_4.jpg')
 a=len(img)
 b=len(img[0])
 
-c=7
+c=2
 
 for x in range(a):
     for y in range(b):
@@ -24,7 +24,7 @@ for x in range(a):
         if p > 255:
             p=255
         img.itemset((x,y,2),p)
-cv2.imshow('asd',img)
+cv2.imshow('mul_resp',img)
 cv2.imwrite('mul_4R.jpg',img)
 
 
