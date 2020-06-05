@@ -13,15 +13,15 @@ c=2
 for x in range(a):
     for y in range(b):
         p=int(img.item(x,y,0)*c)
-        if p > 255:
+        if p>255:
             p=255
         img.itemset((x,y,0),p)
         p=int(img.item(x,y,1)*c)
-        if p > 255:
+        if p>255:
             p=255
         img.itemset((x,y,1),p)
         p=int(img.item(x,y,2)*c)
-        if p > 255:
+        if p>255:
             p=255
         img.itemset((x,y,2),p)
 cv2.imshow('mul_resp',img)
