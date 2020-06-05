@@ -183,7 +183,26 @@ image{
 }
 .contenedor .button10 {
   position: absolute;
-  top: 10%;
+  top: 100%;
+  left: 120%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+	background-color: #4CAF50;
+	border: none;
+	padding: 15px 32px;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+}
+.contenedor .button11 {
+  position: absolute;
+  top: 110%;
   left: 120%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);

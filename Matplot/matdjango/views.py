@@ -649,7 +649,9 @@ def subtraction(request):
     return render(request,'subtraction.html',{'data':uri})
 def subtraction1(request):
     img=cv2.imread('matdjango/Imagenes/images/'+'add_2.jpg')
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
     img2=cv2.imread('matdjango/Imagenes/images/'+'add_1.jpg')
+    img2 = cv2.cvtColor(img2, cv2.COLOR_RGB2HSV)
     a=max(len(img),len(img2))
     b=max(len(img[0]),len(img2[0]))
     img=cv2.resize(img,(b,a))
@@ -680,6 +682,126 @@ def subtraction1(request):
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
     return render(request,'subtraction.html',{'data':uri})
+def Division(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+'sub_10.jpg')
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img2=cv2.imread('matdjango/Imagenes/images/'+'sub_11.jpg')
+    img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+    a=max(len(img),len(img2))
+    b=max(len(img[0]),len(img2[0]))
+    img=cv2.resize(img,(b,a))
+    img2=cv2.resize(img2,(b,a))
+
+    C=100
+    A=0
+
+    B=255
+    c1=255
+    d1=0
+    c2=255
+    d2=0
+    c3=255
+    d3=0
+    for x in range(a):
+        for y in range(b):
+
+            p=(img.item(x,y,0)/img2.item(x,y,0))
+            img.itemset((x,y,0),p*C)
+            if c1>img.item(x,y,0):
+                c1=img.item(x,y,0)
+            if d1<img.item(x,y,0):
+                d1=img.item(x,y,0)
+            p=(img.item(x,y,1)/img2.item(x,y,1))
+            img.itemset((x,y,1),p*C)
+            if c2>img.item(x,y,1):
+                c2=img.item(x,y,1)
+            if d2<img.item(x,y,1):
+                d2=img.item(x,y,1)
+            p=(img.item(x,y,2)/img2.item(x,y,2))
+            img.itemset((x,y,2),p*C)
+            if c3>img.item(x,y,2):
+                c3=img.item(x,y,2)
+            if d3<img.item(x,y,2):
+                d3=img.item(x,y,2)
+
+    for x in range(a):
+        for y in range(b):
+            t=(img.item(x,y,0)-c1)*((B-A)/(d1-c1))+A
+            img.itemset((x,y,0),t)
+            t=(img.item(x,y,1)-c2)*((B-A)/(d2-c2))+A
+            img.itemset((x,y,1),t)
+            t=(img.item(x,y,2)-c3)*((B-A)/(d3-c3))+A
+            img.itemset((x,y,2),t)
+    plt.imshow(img)
+    #plt.plot(range(10))
+    fig =plt.gcf()
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return render(request,'Division.html',{'data':uri})
+def Multiplicacion(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+'mul_4.jpg')
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    a=len(img)
+    b=len(img[0])
+
+    c=5
+
+    for x in range(a):
+        for y in range(b):
+            p=int(img.item(x,y,0)*c)
+            if p>255:
+                p=255
+            img.itemset((x,y,0),p)
+            p=int(img.item(x,y,1)*c)
+            if p>255:
+                p=255
+            img.itemset((x,y,1),p)
+            p=int(img.item(x,y,2)*c)
+            if p>255:
+                p=255
+            img.itemset((x,y,2),p)
+    plt.imshow(img)
+    #plt.plot(range(10))
+    fig =plt.gcf()
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return render(request,'multiplicacion.html',{'data':uri})
+def Blending(request):
+    img=cv2.imread('matdjango/Imagenes/images/'+'perro.jpg')
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img2=cv2.imread('matdjango/Imagenes/images/'+'guerra.jpg')
+    img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+    a=max(len(img),len(img2))
+    b=max(len(img[0]),len(img2[0]))
+    img=cv2.resize(img,(b,a))
+    img2=cv2.resize(img2,(b,a))
+
+    C=0.7
+
+    for x in range(a):
+        for y in range(b):
+
+            x1=abs(math.floor(img.item(x,y,0)*(C))  +  math.floor(img2.item(x,y,0)*(1-C)))
+            img.itemset((x,y,0),x1)
+            x1=abs(math.floor(img.item(x,y,1)*(C))  +  math.floor(img2.item(x,y,1)*(1-C)))
+            img.itemset((x,y,1),x1)
+            x1=abs(math.floor(img.item(x,y,2)*(C))  +  math.floor(img2.item(x,y,2)*(1-C)))
+            img.itemset((x,y,2),x1)
+    plt.imshow(img)
+    #plt.plot(range(10))
+    fig =plt.gcf()
+    buf=io.BytesIO()
+    fig.savefig(buf,format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    return render(request,'blending.html',{'data':uri})
 def image_upload(request):
     if request.method == 'POST':
         form = HotelForm(request.POST, request.FILES)

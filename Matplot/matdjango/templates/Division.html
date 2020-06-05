@@ -15,50 +15,47 @@
 
         <div><img  src="data:image/png;base64,{{data}}" alt="" height="250", width="350"></div>
 
-      <p>Thresholding</p>
-      <form method="POST" action="func1">
-
-            {% csrf_token %}
-            <h1>Valores para de la limitacion</h1><br>
-
-        <table>
-
-            <!-- En tabla se encuentran el input de la que se considerara valor minimo para hacer el thresholding -->
-            <tr>
-
-                <td><label for="valor1">MINIMO</label></td>
-                <td><input type="text" name="valor1" id="valor1" required ></td>
-
-            </tr>
-            <tr>
-
-                <!-- En tabla se encuentran el input de la que se considerara valor maximo para hacer el thresholding -->
-                <td><label for="valor2">MAXIMO</label></td>
-                <td><input type="text" name="valor2" id="valor2" required></td>
-
-            </tr>
-            <tr>
-
-                <td></td>
-                <td><input type="submit" value="Modificar"></td>
-
-            </tr>
-
-        </table>
-
-    </form>
+      <p>Division</p>
 
       <form action='home' method = 'GET'>
 
         <button class='button10' type="submit">Regreso Home</button>
 
       </form>
-      </div>
-      <div>
+      <form method="POST" action="Subtraction_custom">
 
-        <input type="text" value="">
-        <label for="Cex">valor de C</label>
+            {% csrf_token %}
+            <h1>Porcentajes de limitacion</h1><br>
 
+            <table>
+              <tr>
+
+                  <td><label for="valor1">Constante por la que multiplicar</label></td>
+                  <td><input type="text" name="valor1" id="valor1" required ></td>
+
+              </tr>
+              <tr>
+                <tr>
+                  <form action='image_upload' method = "post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit">Upload</button>
+                </tr>
+                <tr>
+                  <form action='image_upload' method = "post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit">Upload</button>
+                </tr>
+                <tr>
+
+                    <td></td>
+                    <td><input type="submit" value="Modificar"></td>
+
+                </tr>
+            </table>
+
+      </form>
       </div>
 
   </body>
