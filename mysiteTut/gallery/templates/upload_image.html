@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+
+      <div class="s2">
+        {% load static %}
+        {% for i in imagenes %}
+          <img src="{{i.image.url}}" alt="{{i.name}}" style="width:250px;">
+        {% endfor %}
+      {% if muestra == "1" %}
+        <div>
+          <img src="{{este}}" alt="imagen_respuesta" style="width:250px;">
+        </div>
+      {% endif %}
+      <form action="thresholding" method='post' enctype="multipart/form-data">
+        {% csrf_token %}
+          <input type="submit" value="Modificar">
+      </form>
+      <div class="s3">
+        <form action='muestra' method='GET'>
+          <button class="button1" type="submit" >Mostrar Imagen</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar1' method='GET'>
+          <button class="button1" type="submit" >Blending</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar2' method='GET'>
+          <button class="button1" type="submit" >Contrast</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar3' method='GET'>
+          <button class="button1" type="submit" >Division</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar4' method='GET'>
+          <button class="button1" type="submit" >Ecualizacion</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar4' method='GET'>
+          <button class="button1" type="submit" >Exponencial</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar5' method='GET'>
+          <button class="button1" type="submit" >Multiplicacion</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar6' method='GET'>
+          <button class="button1" type="submit" >Logaritmico</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar7' method='GET'>
+          <button class="button1" type="submit" >Raise to power</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar8' method='GET'>
+          <button class="button1" type="submit" >Raiz</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar9' method='GET'>
+          <button class="button1" type="submit" >Subtraccion</button>
+        </form>
+      </div>
+      <div class="s3">
+        <form action='mostrar10' method='GET'>
+          <button class="button1" type="submit" >Thresholding</button>
+        </form>
+      </div>
+      {% if pagina == "0" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+          <p>fiberiyfiodsmfisfhi</p>
+        </div>
+      {% endif %}
+      {% if pagina == "1" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+      {% if pagina == "2" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+      {% if pagina == "3" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+      {% if pagina == "4" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+      {% if pagina == "5" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+      {% if pagina == "6" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+      {% if pagina == "7" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+      {% if pagina == "8" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+      {% if pagina == "9" %}
+        <div class="as">
+          <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <input id="id_image" type="file" accept="image/*" name="image" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name" type="text" name="name" required>
+            </p>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      {% endif %}
+    </div>
+    <div class="container-fluid" id="my_friends">
+
+    </div>
+{% endblock content %}
