@@ -1,0 +1,290 @@
+#################################
+def Contrast(request):
+    if request.method == 'GET':
+        return render(request, 'upload_image.html')
+    elif request.method == 'POST':
+        muestra[0]="0"
+        jug=Image.objects.filter(name=imagen_act[0])
+        fr=""
+        for i in jug:
+            fr=i.image.url
+        fr=fr[1:]
+        print("--------------------")
+        print(fr)
+        print("--------------------")
+    #lectura de imagenes
+        img=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        img2=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        a=0
+        b=255
+        fils,cols=img2.shape
+        lista=[0]*256
+        cont=fils*cols
+
+        for x in range(fils):
+            for y in range(cols):
+                lista[img2.item(x,y)]=lista[img2.item(x,y)]+1
+
+        lista2=[]
+        for i in range(len(lista)):
+            lista2=lista2+[i]*lista[i]
+        x=10*cont/100
+        y=90*cont/100
+        c=lista2[round(x)]
+        d=lista2[round(y)]
+
+        for x in range(fils):
+            for y in range(cols):
+                t=(img2.item(x,y)-c)*((b-a)/(d-c))+a
+                if t<0:
+                    t=0
+                if t>255:
+                    t=255
+                img2.itemset((x, y), t)
+        #fin de la funcion
+        cv2.imwrite('gallery/Imagenes/gallery/kilo.jpg',img2)
+        #actualizar la pagina de la funcion
+        return HttpResponseRedirect('/gallery/upload_image/')
+
+############################
+def Adicion(request):
+    if request.method == 'GET':
+        return render(request, 'upload_image.html')
+    elif request.method == 'POST':
+        muestra[0]="0"
+        jug=Image.objects.filter(name=imagen_act[0])
+        fr=""
+        for i in jug:
+            fr=i.image.url
+        fr=fr[1:]
+        print("--------------------")
+        print(fr)
+        print("--------------------")
+        #lectura de imagenes
+        img=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        img2=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        #funcion
+        a=max(len(img),len(img2))
+        b=max(len(img[0]),len(img2[0]))
+        img=cv2.resize(img,(b,a))
+        img2=cv2.resize(img2,(b,a))
+
+        for x in range(a):
+            for y in range(b):
+                p=int(img.item(x,y,0)/2+img2.item(x,y,0)/2)
+                img.itemset((x,y,0),p)
+                p=int(img.item(x,y,1)/2+img2.item(x,y,1)/2)
+                img.itemset((x,y,1),p)
+                p=int(img.item(x,y,2)/2+img2.item(x,y,2)/2)
+                img.itemset((x,y,2),p)
+        #fin de la funcion
+        cv2.imwrite('gallery/Imagenes/gallery/kilo.jpg',img2)
+        #actualizar la pagina de la funcion
+        return HttpResponseRedirect('/gallery/upload_image/')
+
+###############################
+def Sustraccion(request):
+    if request.method == 'GET':
+        return render(request, 'upload_image.html')
+    elif request.method == 'POST':
+        muestra[0]="0"
+        jug=Image.objects.filter(name=imagen_act[0])
+        fr=""
+        for i in jug:
+            fr=i.image.url
+        fr=fr[1:]
+        print("--------------------")
+        print(fr)
+        print("--------------------")
+        img=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        img2=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        #funcion de thresholding
+        a=max(len(img),len(img2))
+        b=max(len(img[0]),len(img2[0]))
+        img=cv2.resize(img,(b,a))
+        img2=cv2.resize(img2,(b,a))
+
+        for x in range(a):
+            for y in range(b):
+                p=abs(img.item(x,y,0)-img2.item(x,y,0)-100)
+                img.itemset((x,y,0),p)
+                p=abs(img.item(x,y,1)-img2.item(x,y,1)-100)
+                img.itemset((x,y,1),p)
+                p=abs(img.item(x,y,2)-img2.item(x,y,2)-100)
+                img.itemset((x,y,2),p)
+
+        for x in range(0,a):
+            for y in range(0,b):
+                if (img.item(x,y,0)+img.item(x,y,1)+img.item(x,y,2))/3<=80 and 0<=(img.item(x,y,0)+img.item(x,y,1)+img.item(x,y,2)):
+                    img.itemset((x,y,0),0)
+                    img.itemset((x,y,1),0)
+                    img.itemset((x,y,2),0)
+                else:
+                    img.itemset((x,y,0),255)
+                    img.itemset((x,y,1),255)
+                    img.itemset((x,y,2),255)
+        #fin de la funcion
+        cv2.imwrite('gallery/Imagenes/gallery/kilo.jpg',img2)
+        #actualizar la pagina de la funcion
+        return HttpResponseRedirect('/gallery/upload_image/')
+##################
+def Multiplicacion(request):
+    if request.method == 'GET':
+        return render(request, 'upload_image.html')
+    elif request.method == 'POST':
+        muestra[0]="0"
+        jug=Image.objects.filter(name=imagen_act[0])
+        fr=""
+        for i in jug:
+            fr=i.image.url
+        fr=fr[1:]
+        print("--------------------")
+        print(fr)
+        print("--------------------")
+        img=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        #funcion de thresholding
+        a=len(img)
+        b=len(img[0])
+        c=2
+
+        for x in range(a):
+            for y in range(b):
+                p=int(img.item(x,y,0)*c)
+                if p>255:
+                    p=255
+                    img.itemset((x,y,0),p)
+                    p=int(img.item(x,y,1)*c)
+                if p>255:
+                    p=255
+                    img.itemset((x,y,1),p)
+                    p=int(img.item(x,y,2)*c)
+                if p>255:
+                    p=255
+                    img.itemset((x,y,2),p)
+        #fin de la funcion
+        cv2.imwrite('gallery/Imagenes/gallery/kilo.jpg',img2)
+        #actualizar la pagina de la funcion
+        return HttpResponseRedirect('/gallery/upload_image/')
+######################################3
+def Division(request):
+    if request.method == 'GET':
+        return render(request, 'upload_image.html')
+    elif request.method == 'POST':
+        muestra[0]="0"
+        jug=Image.objects.filter(name=imagen_act[0])
+        fr=""
+        for i in jug:
+            fr=i.image.url
+        fr=fr[1:]
+        print("--------------------")
+        print(fr)
+        print("--------------------")
+        img=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        img2=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        #funcion de thresholding
+        a=max(len(img),len(img2))
+        b=max(len(img[0]),len(img2[0]))
+        img=cv2.resize(img,(b,a))
+        img2=cv2.resize(img2,(b,a))
+
+        nMax = 255
+        nMin = 0
+
+        Max = 0
+        Min = 255
+        for x in range(a):
+            for y in range(b):
+                p=(img.item(x,y,0)/img2.item(x,y,0))
+                img.itemset((x,y,0),p*100)
+                if p <= Min:
+                    Min = p
+                if p >= Max:
+                    Max = p
+                p=(img.item(x,y,1)/img2.item(x,y,1))
+                img.itemset((x,y,1),p*100)
+                if p <= Min:
+                    Min = p
+                if p >= Max:
+                    Max = p
+                p=(img.item(x,y,2)/img2.item(x,y,2))
+                img.itemset((x,y,2),p*100)
+                if p <= Min:
+                    Min = p
+                if p >= Max:
+                    Max = p
+
+        Min=Min*100
+        Max=Max*100
+
+        for x in range(a):
+            for y in range(b):
+                p=int((((img.item(x,y,0)-(Min))*((nMax-nMin)/(Max-Min)))+nMin))
+                if p >= 255:
+                    p=255
+                if p <= 0:
+                    p=0
+                img.itemset((x,y,0),p)
+                p=int((((img.item(x,y,1)-(Min))*((nMax-nMin)/(Max-Min)))+nMin))
+                if p >= 255:
+                    p=255
+                if p <= 0:
+                    p=0
+                img.itemset((x,y,1),p)
+                p=int((((img.item(x,y,2)-(Min))*((nMax-nMin)/(Max-Min)))+nMin))
+                if p >= 255:
+                    p=255
+                if p <= 0:
+                    p=0
+                img.itemset((x,y,2),p)
+
+        for x in range(0,a):
+            for y in range(0,b):
+                if (img.item(x,y,0)+img.item(x,y,1)+img.item(x,y,2))/3<=170 and 0<=(img.item(x,y,0)+img.item(x,y,1)+img.item(x,y,2)):
+                    img.itemset((x,y,0),0)
+                    img.itemset((x,y,1),0)
+                    img.itemset((x,y,2),0)
+                else:
+                    img.itemset((x,y,0),255)
+                    img.itemset((x,y,1),255)
+                    img.itemset((x,y,2),255)
+
+        #fin de la funcion
+        cv2.imwrite('gallery/Imagenes/gallery/kilo.jpg',img2)
+        #actualizar la pagina de la funcion
+        return HttpResponseRedirect('/gallery/upload_image/')
+################################
+def Blending(request):
+    if request.method == 'GET':
+        return render(request, 'upload_image.html')
+    elif request.method == 'POST':
+        muestra[0]="0"
+        jug=Image.objects.filter(name=imagen_act[0])
+        fr=""
+        for i in jug:
+            fr=i.image.url
+        fr=fr[1:]
+        print("--------------------")
+        print(fr)
+        print("--------------------")
+        img=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        img2=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        #funcion
+        a=max(len(img),len(img2))
+        b=max(len(img[0]),len(img2[0]))
+        img=cv2.resize(img,(b,a))
+        img2=cv2.resize(img2,(b,a))
+
+        C=0.7
+
+        for x in range(a):
+            for y in range(b):
+                x1=abs(math.floor(img.item(x,y,0)*(C))+math.floor(img2.item(x,y,0)*(1-C)))
+                img.itemset((x,y,0),x1)
+                x1=abs(math.floor(img.item(x,y,1)*(C))+math.floor(img2.item(x,y,1)*(1-C)))
+                img.itemset((x,y,1),x1)
+                x1=abs(math.floor(img.item(x,y,2)*(C))+math.floor(img2.item(x,y,2)*(1-C)))
+                img.itemset((x,y,2),x1)
+        #fin de la funcion
+        cv2.imwrite('gallery/Imagenes/gallery/kilo.jpg',img2)
+        #actualizar la pagina de la funcion
+        return HttpResponseRedirect('/gallery/upload_image/')
