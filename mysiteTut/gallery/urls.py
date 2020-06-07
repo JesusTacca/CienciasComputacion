@@ -17,7 +17,6 @@ urlpatterns = [
     path('upload_image/mostrar8',views.mostrar8),
     path('upload_image/mostrar9',views.mostrar9),
     path('upload_image/mostrar10',views.mostrar10),
-    path('upload_image/muestra',views.mostrar_imagen),
 ]
 
 if settings.DEBUG:

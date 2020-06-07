@@ -9,7 +9,6 @@ from .forms import *
 from django.http import HttpResponseRedirect
 imagen_act=[""]
 pagina=[""]
-muestra=["0"]
 ###############################
 def upload_image(request):
     if request.method == 'GET':
@@ -21,7 +20,7 @@ def upload_image(request):
         print(temp)
         for i in temp:
             print(i.image.url)
-        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/kilo.jpg','pagina':pagina[0],'muestra':muestra[0]})
+        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/kilo.jpg','pagina':pagina[0]})
     elif request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -32,59 +31,45 @@ def upload_image(request):
         form = ImageForm()
     return render(request, 'upload_image.html', {'form' : form})
 #################################
-def mostrar_imagen(request):
-    if request.method == 'GET':
-        muestra[0]="1"
-        return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar1(request):
     if request.method == 'GET':
         pagina[0]="0"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar2(request):
     if request.method == 'GET':
         pagina[0]="1"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar3(request):
     if request.method == 'GET':
         pagina[0]="2"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar4(request):
     if request.method == 'GET':
         pagina[0]="3"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar5(request):
     if request.method == 'GET':
         pagina[0]="4"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar6(request):
     if request.method == 'GET':
         pagina[0]="5"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar7(request):
     if request.method == 'GET':
         pagina[0]="6"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar8(request):
     if request.method == 'GET':
         pagina[0]="7"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar9(request):
     if request.method == 'GET':
         pagina[0]="8"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 def mostrar10(request):
     if request.method == 'GET':
         pagina[0]="9"
-        muestra[0]="0"
         return HttpResponseRedirect('/gallery/upload_image/')
 ###############################
 def thresholding(request):
