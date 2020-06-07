@@ -100,16 +100,36 @@ def thresholding(request):
         print("--------------------")
         print(fr)
         print("--------------------")
-        img=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
-        img2=cv2.imread(fr, cv2.IMREAD_GRAYSCALE)
+        img=cv2.imread(fr)
+        img2=cv2.imread(fr)
+
+        Rxval=int(request.POST['Rxval'])
+        Ryval=int(request.POST['Ryval'])
+        Gxval=int(request.POST['Gxval'])
+        Gyval=int(request.POST['Gyval'])
+        Bxval=int(request.POST['Bxval'])
+        Byval=int(request.POST['Byval'])
+
         #funcion de thresholding
-        fils,cols=img.shape
+        fils = len(img)
+        cols = len(img[0])
         for x in range(fils):
             for y in range(cols):
-                if img.item(x,y)<=194 and 175<=img.item(x,y):
-                    img2.itemset((x, y), 255)
+                #RED
+                if img.item(x,y,0)<=Rxval and Ryval<=img.item(x,y,0):
+                    img2.itemset((x, y, 0), 255)
                 else:
-                    img2.itemset((x, y), 0)
+                    img2.itemset((x, y, 0), 0)
+                #GREEN
+                if img.item(x,y,1)<=Gxval and Gyval<=img.item(x,y,1):
+                    img2.itemset((x, y, 1), 255)
+                else:
+                    img2.itemset((x, y, 1), 0)
+                #BLUE
+                if img.item(x,y,2)<=Bxval and Byval<=img.item(x,y,2):
+                    img2.itemset((x, y, 2), 255)
+                else:
+                    img2.itemset((x, y, 2), 0)
         #fin de la funcion
         cv2.imwrite('gallery/Imagenes/gallery/kilo.jpg',img2)
         #actualizar la pagina de la funcion

@@ -75,18 +75,30 @@
       <div class="s3">
         <form action='mostrar10' method='GET'>
           <button class="button1" type="submit" >Thresholding</button>
+          <!--<input type="submit" value="Enviar">-->
         </form>
       </div>
       {% if pagina == "0" %}
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+
+            <div><input type="range" name="Rxval" min="0" max="255" step="1" value="80"><p>Relacion de porcentaje</p></div>
+
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
             <p>
                 Image name:
                 <input id="id_name" type="text" name="name" required>
+            </p>
+
+            <p>
+                <input id="id_image2" type="file" accept="image/*" name="image2" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name2" type="text" name="name2" required>
             </p>
             <input type="submit" value="Submit" />
           </form>
@@ -97,6 +109,13 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+
+            <!-- modificacion -->
+            <div><input type="range" name="xval" min="0" max="255" step="1" value="80"><p>Porcentaje inferior</p>
+            <input type="range" name="yval" min="9" max="255" step="1" value="180"><p>Porcentaje superior</p>
+            </div>
+            <!-- modificacion -->
+
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
@@ -112,6 +131,13 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+
+            <!-- modificacion
+            <p>
+                <input id="cval" type="number" name="cval" required>
+            </p>
+            modificacion -->
+
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
@@ -119,6 +145,17 @@
                 Image name:
                 <input id="id_name" type="text" name="name" required>
             </p>
+
+
+            <!-- modificacion -->
+            <p>
+                <input id="id_image_divi" type="file" accept="image/*" name="image_divi" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name_divi" type="text" name="name_divi" required>
+            </p>
+            <!-- modificacion -->
             <input type="submit" value="Submit" />
           </form>
         </div>
@@ -127,6 +164,18 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <!-- modificacion -->
+            <p>
+                <input id="cval" type="number" name="cval" required>
+            </p>
+            <p>gaaaaaaaaaaaaaaaaaaaa
+              </p>
+            <!-- modificacion -->
+            <!-- modificacion -->
+            <p>
+                <input id="bval" type="number" name="bval" required>
+            </p>
+            <!-- modificacion -->
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
@@ -142,12 +191,26 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <!-- modificacion
+            <p>
+                <input id="cval" type="number" name="cval" required>
+            </p>
+            modificacion -->
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
             <p>
                 Image name:
                 <input id="id_name" type="text" name="name" required>
+            </p>
+
+
+            <p>
+                <input id="id_image_multi" type="file" accept="image/*" name="image_multi" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name_multi" type="text" name="name" required>
             </p>
             <input type="submit" value="Submit" />
           </form>
@@ -157,6 +220,11 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <!-- modificacion -->
+            <p>
+                <input id="cval" type="number" name="cval" required>
+            </p>
+            <!-- modificacion -->
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
@@ -172,6 +240,16 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <!-- modificacion -->
+            <p>
+                <input id="cval" type="number" name="cval" required>
+            </p>
+            <!-- modificacion -->
+            <!-- modificacion -->
+            <p>
+                <input id="rval" type="number" name="rval" required>
+            </p>
+            <!-- modificacion -->
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
@@ -187,6 +265,12 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <!-- modificacion -->
+            <p>
+                <input id="cval" type="number" name="cval" required>
+            </p>
+            <!-- modificacion -->
+
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
@@ -202,12 +286,28 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <!-- modificacion
+
+            <p>
+                <input id="cval" type="number" name="cval" required>
+            </p>
+
+            modificacion -->
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
             <p>
                 Image name:
                 <input id="id_name" type="text" name="name" required>
+            </p>
+
+
+            <p>
+                <input id="id_image_resta" type="file" accept="image/*" name="image_resta" required>
+            </p>
+            <p>
+                Image name:
+                <input id="id_name_resta" type="text" name="name" required>
             </p>
             <input type="submit" value="Submit" />
           </form>
@@ -217,6 +317,22 @@
         <div class="as">
           <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <!-- modificacion en caso que que se quiera implementar tambien un boton para elgir ESCALA de GRISES o RGB
+            <div><input type="range" name="xval" min="0" max="255" step="1" value="80">
+            <input type="range" name="yval" min="9" max="255" step="1" value="180">
+            <p>R</p></div>
+            termina aca  -->
+            <!-- modificacion -->
+            <div><input type="range" name="Rxval" min="0" max="255" step="1" value="80">
+            <input type="range" name="Ryval" min="9" max="255" step="1" value="180">
+            <p>R</p></div>
+            <div><input type="range" name="Gxval" min="0" max="255" step="1" value="80">
+            <input type="range" name="Gyval" min="9" max="255" step="1" value="180">
+            <p>G</p></div>
+            <div><input type="range" name="Bxval" min="0" max="255" step="1" value="80">
+            <input type="range" name="Byval" min="9" max="255" step="1" value="180">
+            <p>B</p></div>
+            <!-- termina aca  -->
             <p>
                 <input id="id_image" type="file" accept="image/*" name="image" required>
             </p>
