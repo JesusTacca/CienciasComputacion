@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from .models import *
 from .forms import *
 from django.http import HttpResponseRedirect
-imagen_act=[""]
+imagen_act=["",""]
 pagina=[""]
 ###############################
 def upload_image(request):
@@ -20,63 +20,23 @@ def upload_image(request):
         print(temp)
         for i in temp:
             print(i.image.url)
-        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/kilo.jpg','pagina':pagina[0]})
+        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/rpta.jpg','pagina':pagina[0]})
     elif request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             imagen_act[0]=str(request.POST['name'])
+            imagen_act[1]=str(request.POST['name2'])
             form.save()
             return HttpResponseRedirect('/gallery/upload_image/')
     else:
         form = ImageForm()
     return render(request, 'upload_image.html', {'form' : form})
-#################################
-def mostrar1(request):
-    if request.method == 'GET':
-        pagina[0]="0"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar2(request):
-    if request.method == 'GET':
-        pagina[0]="1"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar3(request):
-    if request.method == 'GET':
-        pagina[0]="2"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar4(request):
-    if request.method == 'GET':
-        pagina[0]="3"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar5(request):
-    if request.method == 'GET':
-        pagina[0]="4"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar6(request):
-    if request.method == 'GET':
-        pagina[0]="5"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar7(request):
-    if request.method == 'GET':
-        pagina[0]="6"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar8(request):
-    if request.method == 'GET':
-        pagina[0]="7"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar9(request):
-    if request.method == 'GET':
-        pagina[0]="8"
-        return HttpResponseRedirect('/gallery/upload_image/')
-def mostrar10(request):
-    if request.method == 'GET':
-        pagina[0]="9"
-        return HttpResponseRedirect('/gallery/upload_image/')
+
 ###############################
 def thresholding(request):
     if request.method == 'GET':
         return render(request, 'upload_image.html')
     elif request.method == 'POST':
-        muestra[0]="0"
         jug=Image.objects.filter(name=imagen_act[0])
         fr=""
         for i in jug:
@@ -116,6 +76,33 @@ def thresholding(request):
                 else:
                     img2.itemset((x, y, 2), 0)
         #fin de la funcion
-        cv2.imwrite('gallery/Imagenes/gallery/kilo.jpg',img2)
+        cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img2)
         #actualizar la pagina de la funcion
         return HttpResponseRedirect('/gallery/upload_image/')
+def blending(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
+    current2=""
+    for i in jug:
+        current1=i.image.url
+        current2=i.image2.url
+    current1=current1[1:]
+    current2=current2[1:]
+    img=cv2.imread(current1)
+    img2=cv2.imread(current2)
+    a=max(len(img),len(img2))
+    b=max(len(img[0]),len(img2[0]))
+    img=cv2.resize(img,(b,a))
+    img2=cv2.resize(img2,(b,a))
+    C=float(request.POST['porcentaje'])
+    print(C)
+    for x in range(a):
+        for y in range(b):
+            x1=abs(math.floor(img.item(x,y,0)*(C))  +  math.floor(img2.item(x,y,0)*(1-C)))
+            img.itemset((x,y,0),x1)
+            x1=abs(math.floor(img.item(x,y,1)*(C))  +  math.floor(img2.item(x,y,1)*(1-C)))
+            img.itemset((x,y,1),x1)
+            x1=abs(math.floor(img.item(x,y,2)*(C))  +  math.floor(img2.item(x,y,2)*(1-C)))
+            img.itemset((x,y,2),x1)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    return HttpResponseRedirect('/gallery/upload_image/')

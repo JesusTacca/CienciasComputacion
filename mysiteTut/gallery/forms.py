@@ -5,4 +5,4 @@ from .models import *
 class ImageForm(forms.ModelForm):
    class Meta:
       model = Image
-      fields = ['image','name']
+      fields = ['image','image2','name','name2']
