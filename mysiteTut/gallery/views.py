@@ -106,3 +106,157 @@ def blending(request):
             img.itemset((x,y,2),x1)
     cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
+def raiz(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
+    for i in jug:
+        current1=i.image.url
+    current1=current1[1:]
+    img=cv2.imread(current1)
+    fils = len(img)
+    cols = len(img[0])
+
+    cont=fils*cols
+    p=[0]*256
+    c=int(request.POST['valors'])
+    for x in range(fils):
+        for y in range(cols):
+            p=c*math.sqrt(img.item(x,y,0))
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,0),int(p))
+            p=c*math.sqrt(img.item(x,y,1))
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,1),int(p))
+            p=c*math.sqrt(img.item(x,y,2))
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,2),int(p))
+    #fin de la funcion
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    return HttpResponseRedirect('/gallery/upload_image/')
+def raiztopower(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
+    for i in jug:
+        current1=i.image.url
+    current1=current1[1:]
+    img=cv2.imread(current1)
+    fils = len(img)
+    cols = len(img[0])
+
+    cont=fils*cols
+    p=[0]*256
+    r=1.5
+    c=float(request.POST['barl'])
+    for x in range(fils):
+        for y in range(cols):
+            p=c*pow(img.item(x,y,0),r)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,0),int(p))
+            p=c*pow(img.item(x,y,1),r)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,1),int(p))
+            p=c*pow(img.item(x,y,2),r)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,2),int(p))
+    #fin de la funcion
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    return HttpResponseRedirect('/gallery/upload_image/')
+def Logaritmo(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
+    for i in jug:
+        current1=i.image.url
+    current1=current1[1:]
+    img=cv2.imread(current1)
+    fils = len(img)
+    cols = len(img[0])
+    c=int(request.POST['valorC'])
+    for x in range(fils):
+        for y in range(cols):
+            p=c*math.log(1+img.item(x,y,0),10)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,0),int(p))
+            p=c*math.log(1+img.item(x,y,1),10)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,1),int(p))
+            p=c*math.log(1+img.item(x,y,2),10)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,2),int(p))
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    return HttpResponseRedirect('/gallery/upload_image/')
+#def Ecualizacion(request):
+
+    #jug=Image.objects.filter(name=imagen_act[0])
+    #current1=""
+    #current2=""
+    #for i in jug:
+        #current1=i.image.url
+        #current2=i.image2.url
+    #current1=current1[1:]
+    #current2=current2[1:]
+    #img=cv2.imread(current1)
+    #img2=cv2.imread(current2)
+    #funcion Logaritmo customisada
+
+def Exponencial(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
+    #current2=""
+    for i in jug:
+        current1=i.image.url
+    current1=current1[1:]
+    img=cv2.imread(current1)
+    fils = len(img)
+    cols = len(img[0])
+    c=int(request.POST['datoC'])
+    b=1.01
+    for x in range(fils):
+        for y in range(cols):
+            p=c*(pow(b,img.item(x,y,0))-1)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,0),int(p))
+            p=c*(pow(b,img.item(x,y,1))-1)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,1),int(p))
+            p=c*(pow(b,img.item(x,y,2))-1)
+            if p>255:
+                p=255
+            if p<0:
+                p=0
+            img.itemset((x,y,2),int(p))
+    #fin de la funcion
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    return HttpResponseRedirect('/gallery/upload_image/')

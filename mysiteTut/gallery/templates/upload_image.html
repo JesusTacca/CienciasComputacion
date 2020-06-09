@@ -193,93 +193,91 @@
                 </form>
               </div>
               <div id="menu5" class="container tab-pane fade"><br>
-                <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <!-- modificacion -->
-                  <p>
-                      <input id="cval" type="number" name="cval" required>
-                  </p>
-                  <!-- modificacion -->
-                  <p>
-                      <input id="id_image" type="file" accept="image/*" name="image" required>
-                  </p>
-                  <p>
-                      Image name:
-                      <input id="id_name" type="text" name="name" required>
-                  </p>
-                  <input type="submit" value="Submit" />
-                </form>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo5_1">Mostrar</button>
+                    <div id="demo5_1" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image.url}}" class="img-thumbnail" alt="{{i.name}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo5_3">Mostrar</button>
+                    <div id="demo5_3" class="collapse">
+                        <img src="{{este}}" class="img-thumbnail" alt="imagen" style="width:250px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <form action="raiz" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div><input type="text" id="valors" name="valors" required></div>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                </div>
               </div>
               <div id="menu6" class="container tab-pane fade"><br>
-                <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <!-- modificacion -->
-                  <p>
-                      <input id="cval" type="number" name="cval" required>
-                  </p>
-                  <!-- modificacion -->
-                  <!-- modificacion -->
-                  <p>
-                      <input id="rval" type="number" name="rval" required>
-                  </p>
-                  <!-- modificacion -->
-                  <p>
-                      <input id="id_image" type="file" accept="image/*" name="image" required>
-                  </p>
-                  <p>
-                      Image name:
-                      <input id="id_name" type="text" name="name" required>
-                  </p>
-                  <input type="submit" value="Submit" />
-                </form>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo6_1">Mostrar</button>
+                    <div id="demo6_1" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image.url}}" class="img-thumbnail" alt="{{i.name}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo6_3">Mostrar</button>
+                    <div id="demo6_3" class="collapse">
+                        <img src="{{este}}" class="img-thumbnail" alt="imagen" style="width:250px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <form action="raiztopower" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div><input type="text" id="barl" name="barl" required></div>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                </div>
               </div>
               <div id="menu7" class="container tab-pane fade"><br>
-                <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <!-- modificacion -->
-                  <p>
-                      <input id="cval" type="number" name="cval" required>
-                  </p>
-                  <!-- modificacion -->
-
-                  <p>
-                      <input id="id_image" type="file" accept="image/*" name="image" required>
-                  </p>
-                  <p>
-                      Image name:
-                      <input id="id_name" type="text" name="name" required>
-                  </p>
-                  <input type="submit" value="Submit" />
-                </form>
-              </div>
-              <div id="menu8" class="container tab-pane fade"><br>
-                <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <!-- modificacion
-
-                  <p>
-                      <input id="cval" type="number" name="cval" required>
-                  </p>
-
-                  modificacion -->
-                  <p>
-                      <input id="id_image" type="file" accept="image/*" name="image" required>
-                  </p>
-                  <p>
-                      Image name:
-                      <input id="id_name" type="text" name="name" required>
-                  </p>
-
-
-                  <p>
-                      <input id="id_image_resta" type="file" accept="image/*" name="image_resta" required>
-                  </p>
-                  <p>
-                      Image name:
-                      <input id="id_name_resta" type="text" name="name" required>
-                  </p>
-                  <input type="submit" value="Submit" />
-                </form>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo7_1">Mostrar</button>
+                    <div id="demo7_1" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image.url}}" class="img-thumbnail" alt="{{i.name}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo7_3">Mostrar</button>
+                    <div id="demo7_3" class="collapse">
+                        <img src="{{este}}" class="img-thumbnail" alt="imagen" style="width:250px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <form action="Logaritmo" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div><input type="text" id="valorC" name="valorC" required></div>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                </div>
               </div>
               <div id="menu8" class="container tab-pane fade"><br>
                 <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
@@ -309,6 +307,35 @@
                   </p>
                   <input type="submit" value="Submit" />
                 </form>
+              </div>
+              <div id="menu9" class="container tab-pane fade"><br>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo9_1">Mostrar</button>
+                    <div id="demo9_1" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image.url}}" class="img-thumbnail" alt="{{i.name}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo9_3">Mostrar</button>
+                    <div id="demo9_3" class="collapse">
+                        <img src="{{este}}" class="img-thumbnail" alt="imagen" style="width:250px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <form action="Exponencial" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div><input type="text" id="datoC" name="datoC" required></div>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                </div>
               </div>
           </div>
         </div>
