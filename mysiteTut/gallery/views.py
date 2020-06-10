@@ -20,7 +20,7 @@ def upload_image(request):
         print(temp)
         for i in temp:
             print(i.image.url)
-        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/rpta.jpg','pagina':pagina[0]})
+        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/mostrar.jpg','pagina':pagina[0]})
     elif request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -76,7 +76,7 @@ def thresholding(request):
                 else:
                     img2.itemset((x, y, 2), 0)
         #fin de la funcion
-        cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img2)
+        cv2.imwrite('gallery/Imagenes/gallery/mostrar.jpg',img2)
         #actualizar la pagina de la funcion
         return HttpResponseRedirect('/gallery/upload_image/')
 def blending(request):
@@ -104,5 +104,5 @@ def blending(request):
             img.itemset((x,y,1),x1)
             x1=abs(math.floor(img.item(x,y,2)*(C))  +  math.floor(img2.item(x,y,2)*(1-C)))
             img.itemset((x,y,2),x1)
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/mostrar.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
