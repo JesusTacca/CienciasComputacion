@@ -39,6 +39,9 @@ def thresholding(request):
     for i in jug:
         current1=i.image.url
     current1=current1[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
 
     Rxval=int(request.POST['Rxval'])
@@ -79,6 +82,9 @@ def blending(request):
         current2=i.image2.url
     current1=current1[1:]
     current2=current2[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -103,6 +109,9 @@ def raiz(request):
     for i in jug:
         current1=i.image.url
     current1=current1[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     fils = len(img)
     cols = len(img[0])
@@ -139,6 +148,9 @@ def raiztopower(request):
     for i in jug:
         current1=i.image.url
     current1=current1[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     fils = len(img)
     cols = len(img[0])
@@ -176,6 +188,9 @@ def Logaritmo(request):
     for i in jug:
         current1=i.image.url
     current1=current1[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     fils = len(img)
     cols = len(img[0])
@@ -223,6 +238,9 @@ def Exponencial(request):
     for i in jug:
         current1=i.image.url
     current1=current1[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     fils = len(img)
     cols = len(img[0])
@@ -258,6 +276,10 @@ def multiplicacion(request):
     for i in jug:
         current1=i.image.url
     current1=current1[1:]
+    print("$$$$$$",request.POST,"$$$$$$$$")
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     a=len(img)
     b=len(img[0])
@@ -292,6 +314,9 @@ def division(request):
     current1=current1[1:]
     current2=current2[1:]
     C=int(request.POST['cval'])
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     bimg1 = True
@@ -404,6 +429,9 @@ def contrast(request):
     for i in jug:
         current1=i.image.url
     current1=current1[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current1)
     fils=len(img)
@@ -460,6 +488,9 @@ def substracion(request):
         current2=i.image2.url
     current1=current1[1:]
     current2=current2[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
