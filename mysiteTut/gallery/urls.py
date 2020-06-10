@@ -13,6 +13,10 @@ urlpatterns = [
     path('upload_image/Logaritmo',views.Logaritmo),
     #path('upload_image/Ecualizacion',views.Ecualizacion),
     path('upload_image/Exponencial',views.Exponencial),
+    path('upload_image/multiplicacion',views.multiplicacion),
+    path('upload_image/division',views.division),
+    path('upload_image/contrast',views.contrast),
+    path('upload_image/substracion',views.substracion),
 ]
 
 if settings.DEBUG:
