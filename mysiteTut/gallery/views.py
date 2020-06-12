@@ -9,6 +9,46 @@ from .forms import *
 from django.http import HttpResponseRedirect
 imagen_act=["",""]
 pagina=[""]
+
+def binP(num):
+    num = int(num)
+    b_num = bin(num)
+    b_num2 = b_num[slice(2,len(b_num),1)]
+    return b_num2
+def deci(num):
+    rango = len(num)
+    value = 0
+    for i in range(rango):
+            digit = num[rango-i-1]
+            if digit == '1':
+                    value = value + pow(2, i)
+    return value
+def andB(num1,num2):
+
+    len1=len(num1)
+    len2=len(num2)
+
+    if len1 < len2:
+        rest = len2-len1
+        for i in range (rest):
+            num1 = '0' + num1
+    else:
+        rest = len1-len2
+        for i in range (rest):
+            num2 = '0' + num2
+
+    rango = len(num1)
+
+    value = ''
+
+    for i in range (0,rango):
+        if(num1[rango-1-i] == '1' and num2[rango-1-i] == '1' ):
+            value = '1' + value
+        else:
+            value = '0' + value
+    return value
+def notB(num):
+    return 255-num
 ###############################
 def upload_image(request):
     if request.method == 'GET':
@@ -505,5 +545,61 @@ def substracion(request):
             img.itemset((x,y,1),p)
             p=abs(img.item(x,y,2)-img2.item(x,y,2)-100)
             img.itemset((x,y,2),p)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    return HttpResponseRedirect('/gallery/upload_image/')
+
+
+
+def binari_and(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
+    current2=""
+    for i in jug:
+        current1=i.image.url
+        current2=i.image2.url
+    current1=current1[1:]
+    current2=current2[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
+    img=cv2.imread(current1)
+    img2=cv2.imread(current2)
+    a=max(len(img),len(img2))
+    b=max(len(img[0]),len(img2[0]))
+    img=cv2.resize(img,(b,a))
+    img2=cv2.resize(img2,(b,a))
+    for x in range(a):
+        for y in range(b):
+            img.itemset( (x,y,0),deci( andB( binP(img.item(x,y,0)) , binP(img2.item(x,y,0)) ) ) )
+            img.itemset( (x,y,1),deci( andB( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) ) )
+            img.itemset( (x,y,2),deci( andB( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) ) )
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    return HttpResponseRedirect('/gallery/upload_image/')
+
+
+def binari_nand(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
+    current2=""
+    for i in jug:
+        current1=i.image.url
+        current2=i.image2.url
+    current1=current1[1:]
+    current2=current2[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
+    img=cv2.imread(current1)
+    img2=cv2.imread(current2)
+    a=max(len(img),len(img2))
+    b=max(len(img[0]),len(img2[0]))
+    img=cv2.resize(img,(b,a))
+    img2=cv2.resize(img2,(b,a))
+    for x in range(a):
+        for y in range(b):
+            img.itemset( (x,y,0), notB( deci( andB( binP(img.item(x,y,0)) , binP(img2.item(x,y,0)) ) )  ))
+            img.itemset( (x,y,1), notB( deci( andB( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) )  ))
+            img.itemset( (x,y,2), notB( deci( andB( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) )  ))
+
     cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
