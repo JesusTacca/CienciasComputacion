@@ -1,9 +1,3 @@
-import cv2
-import random
-import numpy as np
-import math
-from matplotlib import pyplot as plt
-
 def binP(num):
     num = int(num)
     b_num = bin(num)
@@ -17,20 +11,26 @@ def deci(num):
             if digit == '1':
                     value = value + pow(2, i)
     return value
+
 def andB(num1,num2):
-    
     len1=len(num1)
     len2=len(num2)
-    
+    print("estos son los num")
+    print(num1)
+    print(num2)
+    print("termina num")
     if len1 < len2:
         rest = len2-len1
         for i in range (rest):
-            num1 = '0' + num1
+            num1 = '0' + num1 
     else:
         rest = len1-len2
         for i in range (rest):
             num2 = '0' + num2
-            
+    print("estos son los num con ceros")
+    print(num1)
+    print(num2)
+    print("termina num")  
     rango = len(num1)
 
     value = ''
@@ -40,28 +40,14 @@ def andB(num1,num2):
             value = '1' + value
         else:
             value = '0' + value
+    print(value,"values")
     return value
 
 
-img=cv2.imread('log_3.png')
-img2=cv2.imread('log_4.png')
-a=max(len(img),len(img2))
-b=max(len(img[0]),len(img2[0]))
-img=cv2.resize(img,(b,a))
-img2=cv2.resize(img2,(b,a))
 
-for x in range(a):
-    for y in range(b):
-        img.itemset( (x,y,0),deci( andB( binP(img.item(x,y,0)) , binP(img2.item(x,y,0)) ) ) )
-        img.itemset( (x,y,1),deci( andB( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) ) )
-        img.itemset( (x,y,2),deci( andB( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) ) )
-
-cv2.imwrite('AND.jpg',img)
-#img=cv2.imread('AND.jpg', cv2.IMREAD_GRAYSCALE)
-#cv2.imwrite('AND.jpg',img)
-
-
-
-
-
-
+while True :
+    x = input()
+    y = input()
+    print()
+    print( deci ( andB(binP(x),binP(y) ) ) )
+    print("-----------")

@@ -22,11 +22,11 @@ def andB(num1,num2):
     if len1 < len2:
         rest = len2-len1
         for i in range (rest):
-            num1 = num1 + '0'
+            num1 = '0' + num1
     elif len2 < len1:
         rest = len1-len2
         for i in range (rest):
-            num2 = num2 + '0'
+            num2 = '0' + num2
     rango = len(num1)
 
     value = ''
