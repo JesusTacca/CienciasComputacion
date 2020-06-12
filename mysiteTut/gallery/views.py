@@ -68,6 +68,27 @@ def OR(num1,num2):
         else:
             value = '1' + value
     return value
+def XOR(num1,num2):
+    len1=len(num1)
+    len2=len(num2)
+    if len1 < len2:
+        rest = len2-len1
+        for i in range (rest):
+            num1 = '0' + num1
+    elif len2 < len1:
+        rest = len1-len2
+        for i in range (rest):
+            num2 = '0' + num2
+    rango = len(num1)
+
+    value = ''
+
+    for i in range (0,rango):
+        if(num1[rango-1-i] == num2[rango-1-i]):
+            value = '0' + value
+        else:
+            value = '1' + value
+    return value
 def notB(num):
     return 255-num
 def orA(num):
@@ -696,9 +717,9 @@ def binari_xor(request):
     img2=cv2.resize(img2,(b,a))
     for x in range(a):
         for y in range(b):
-            img.itemset( (x,y,0), orA( deci( OR( binP(img.item(x,y,0)) , binP(img2.item(x,y,0)) ) )  ))
-            img.itemset( (x,y,1), orA( deci( OR( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) )  ))
-            img.itemset( (x,y,2), orA( deci( OR( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) )  ))
+            img.itemset( (x,y,0), ( deci( XOR( binP(img.item(x,y,0)) , binP(img2.item(x,y,0)) ) )  ))
+            img.itemset( (x,y,1), ( deci( XOR( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) )  ))
+            img.itemset( (x,y,2), ( deci( XOR( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) )  ))
 
     cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
