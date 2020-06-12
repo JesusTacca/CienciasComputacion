@@ -19,6 +19,8 @@ urlpatterns = [
     path('upload_image/substracion',views.substracion),
     path('upload_image/binari_and',views.binari_and),
     path('upload_image/binari_nand',views.binari_nand),
+    path('upload_image/binari_or',views.binari_or),
+    path('upload_image/binari_xor',views.binari_xor),
 
 ]
 

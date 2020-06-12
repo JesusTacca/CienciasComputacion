@@ -498,7 +498,7 @@
                     </div>
                   </div>
                   <div class="col-sm-4">
-                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo14_1">Mostrar Imagen</button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo14_2">Mostrar Imagen</button>
                     <div id="demo14_2" class="collapse">
                       {% load static %}
                       {% for i in imagenes %}
@@ -571,6 +571,92 @@
                   </div>
                 </div>
               </div>
+              <div id="menu16" class="container tab-pane fade"><br>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo16_1">Mostrar Imagen</button>
+                    <div id="demo16_1" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image.url}}" class="img-thumbnail" alt="{{i.name}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo16_2">Mostrar Imagen</button>
+                    <div id="demo16_2" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image2.url}}" class="img-thumbnail" alt="{{i.name2}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo16_3">Mostrar Resultado</button>
+                    <div id="demo16_3" class="collapse">
+                      {% load static %}
+                        <img src="{{este}}" class="img-thumbnail" alt="imagen" style="width:250px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <form action="binari_or" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="switch12" name="cascade">
+                        <label class="custom-control-label" for="switch12">Cascade</label>
+                      </div>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div id="menu17" class="container tab-pane fade"><br>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo17_1">Mostrar Imagen</button>
+                    <div id="demo17_1" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image.url}}" class="img-thumbnail" alt="{{i.name}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo17_2">Mostrar Imagen</button>
+                    <div id="demo17_2" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image2.url}}" class="img-thumbnail" alt="{{i.name2}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo17_3">Mostrar Resultado</button>
+                    <div id="demo17_3" class="collapse">
+                      {% load static %}
+                        <img src="{{este}}" class="img-thumbnail" alt="imagen" style="width:250px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <form action="binari_xor" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="switch13" name="cascade">
+                        <label class="custom-control-label" for="switch13">Cascade</label>
+                      </div>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
         <div class="col-sm-2">
@@ -619,6 +705,12 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="pill" href="#menu15">NAND</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="pill" href="#menu16">OR</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="pill" href="#menu17">XOR</a>
             </li>
           </ul>
         </div>
