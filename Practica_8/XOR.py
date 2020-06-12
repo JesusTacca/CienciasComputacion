@@ -32,7 +32,7 @@ def XOR(num1,num2):
     value = ''
     
     for i in range (0,rango):
-        if(num1[rango-1-i] == num2[rango-1-i]):
+        if(num1[rango-1-i] == '0' and num2[rango-1-i] == '0' ):
             value = '0' + value
         else:
             value = '1' + value
