@@ -382,107 +382,48 @@ def division(request):
             current1="gallery/Imagenes/gallery/rpta.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
-    bimg1 = True
-    bimg2 = True
-    if np.any(img == None):
-        bimg1 = False
-    if np.any(img2 == None):
-        bimg2 = False
-    print(bimg1,bimg2,"estos son los resultados ")
-    if np.logical_and(bimg1,bimg2):
-        print("si hay")
-        a=max(len(img),len(img2))
-        b=max(len(img[0]),len(img2[0]))
-        img=cv2.resize(img,(b,a))
-        img2=cv2.resize(img2,(b,a))
-        img2 = img
-        nMax = 255
-        nMin = 0
-        Max = 0
-        Min = 255
-        for x in range(a):
-            for y in range(b):
-                if img2.item(x,y,0) == 0:
-                    img2.item(x,y,0) == 1
-                p=(img.item(x,y,0)/img2.item(x,y,0))
-                img.itemset((x,y,0),p*C)
-                if p <= Min:
-                    Min = p
-                if p >= Max:
-                    Max = p
-                if img2.item(x,y,1) == 0:
-                    img2.item(x,y,1) == 1
-                p=(img.item(x,y,1)/img2.item(x,y,1))
-                img.itemset((x,y,1),p*C)
-                if p <= Min:
-                    Min = p
-                if p >= Max:
-                    Max = p
-                if img2.item(x,y,2) == 0:
-                    img2.item(x,y,2) == 1
-                p=(img.item(x,y,2)/img2.item(x,y,2))
-                img.itemset((x,y,2),p*C)
-                if p <= Min:
-                    Min = p
-                if p >= Max:
-                    Max = p
-        Min=Min*C
-        Max=Max*C
-    else:
-        print("entre aki")
-        a=len(img)
-        b=len(img[0])
-
-        nMax = 255
-        nMin = 0
-        Max = 0
-        Min = 255
-        for x in range(a):
-            for y in range(b):
-                p=int(img.item(x,y,0)/C)
-                img.itemset((x,y,0),p)
-                if p <= Min:
-                    Min = p
-                if p >= Max:
-                    Max = p
-                p=int(img.item(x,y,1)/C)
-                img.itemset((x,y,1),p)
-                if p <= Min:
-                    Min = p
-                if p >= Max:
-                    Max = p
-                p=int(img.item(x,y,2)/C)
-                img.itemset((x,y,2),p)
-                if p <= Min:
-                    Min = p
-                if p >= Max:
-                    Max = p
-        Min=Min
-        Max=Max
-
-    rest = Max-Min
-    if rest == 0:
-        rest = 1
+    a=max(len(img),len(img2))
+    b=max(len(img[0]),len(img2[0]))
+    img=cv2.resize(img,(b,a))
+    img2=cv2.resize(img2,(b,a))
+    A=0
+    B=255
+    c1=255
+    d1=0
+    c2=255
+    d2=0
+    c3=255
+    d3=0
     for x in range(a):
         for y in range(b):
-            p=int((((img.item(x,y,0)-(Min))*((nMax-nMin)/(rest)))+nMin))
-            if p >= 255:
-                p=255
-            if p <= 0:
-                p=0
-            img.itemset((x,y,0),p)
-            p=int((((img.item(x,y,1)-(Min))*((nMax-nMin)/(rest)))+nMin))
-            if p >= 255:
-                p=255
-            if p <= 0:
-                p=0
-            img.itemset((x,y,1),p)
-            p=int((((img.item(x,y,2)-(Min))*((nMax-nMin)/(rest)))+nMin))
-            if p >= 255:
-                p=255
-            if p <= 0:
-                p=0
-            img.itemset((x,y,2),p)
+
+            p=(img.item(x,y,0)/img2.item(x,y,0))
+            img.itemset((x,y,0),p*C)
+            if c1>img.item(x,y,0):
+                c1=img.item(x,y,0)
+            if d1<img.item(x,y,0):
+                d1=img.item(x,y,0)
+            p=(img.item(x,y,1)/img2.item(x,y,1))
+            img.itemset((x,y,1),p*C)
+            if c2>img.item(x,y,1):
+                c2=img.item(x,y,1)
+            if d2<img.item(x,y,1):
+                d2=img.item(x,y,1)
+            p=(img.item(x,y,2)/img2.item(x,y,2))
+            img.itemset((x,y,2),p*C)
+            if c3>img.item(x,y,2):
+                c3=img.item(x,y,2)
+            if d3<img.item(x,y,2):
+                d3=img.item(x,y,2)
+
+    for x in range(a):
+        for y in range(b):
+            t=(img.item(x,y,0)-c1)*((B-A)/(d1-c1))+A
+            img.itemset((x,y,0),t)
+            t=(img.item(x,y,1)-c2)*((B-A)/(d2-c2))+A
+            img.itemset((x,y,1),t)
+            t=(img.item(x,y,2)-c3)*((B-A)/(d3-c3))+A
+            img.itemset((x,y,2),t)
     cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
@@ -562,16 +503,55 @@ def substracion(request):
     img2=cv2.resize(img2,(b,a))
     for x in range(a):
         for y in range(b):
-            p=abs(img.item(x,y,0)-img2.item(x,y,0)-100)
-            img.itemset((x,y,0),p)
-            p=abs(img.item(x,y,1)-img2.item(x,y,1)-100)
-            img.itemset((x,y,1),p)
-            p=abs(img.item(x,y,2)-img2.item(x,y,2)-100)
-            img.itemset((x,y,2),p)
+            p=(img.item(x,y,0)-img2.item(x,y,0))
+            if p<0:
+                img.itemset((x,y,0),0)
+            else:
+                img.itemset((x,y,0),p)
+            p=(img.item(x,y,1)-img2.item(x,y,1))
+            if p<0:
+                img.itemset((x,y,1),0)
+            else:
+                img.itemset((x,y,1),p)
+            p=(img.item(x,y,2)-img2.item(x,y,2))
+            if p<0:
+                img.itemset((x,y,2),0)
+            else:
+                img.itemset((x,y,2),p)
     cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 
+def adicion(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
+    current2=""
+    for i in jug:
+        current1=i.image.url
+        current2=i.image2.url
+    current1=current1[1:]
+    current2=current2[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
+    img=cv2.imread(current1)
+    img2=cv2.imread(current2)
+    a=max(len(img),len(img2))
+    b=max(len(img[0]),len(img2[0]))
+    img=cv2.resize(img,(b,a))
+    img2=cv2.resize(img2,(b,a))
+
+
+    for x in range(a):
+        for y in range(b):
+            p=int(img.item(x,y,0)/2+img2.item(x,y,0)/2)
+            img.itemset((x,y,0),p)
+            p=int(img.item(x,y,1)/2+img2.item(x,y,1)/2)
+            img.itemset((x,y,1),p)
+            p=int(img.item(x,y,2)/2+img2.item(x,y,2)/2)
+            img.itemset((x,y,2),p)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    return HttpResponseRedirect('/gallery/upload_image/')
 
 def binari_and(request):
     jug=Image.objects.filter(name=imagen_act[0])
