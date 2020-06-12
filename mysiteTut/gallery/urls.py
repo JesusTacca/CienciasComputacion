@@ -11,7 +11,7 @@ urlpatterns = [
     path('upload_image/raiz',views.raiz),
     path('upload_image/raiztopower',views.raiztopower),
     path('upload_image/Logaritmo',views.Logaritmo),
-    #path('upload_image/Ecualizacion',views.Ecualizacion),
+    path('upload_image/ecualizacion',views.ecualizacion),
     path('upload_image/Exponencial',views.Exponencial),
     path('upload_image/multiplicacion',views.multiplicacion),
     path('upload_image/division',views.division),

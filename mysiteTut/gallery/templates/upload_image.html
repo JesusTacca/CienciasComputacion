@@ -344,33 +344,56 @@
                   </div>
                 </div>
               </div>
+
+
+
               <div id="menu8" class="container tab-pane fade"><br>
-                <form action="{% url 'gallery:upload_image' %}" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="switch1" name="cascade">
-                    <label class="custom-control-label" for="switch1">Cascade</label>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo8_1">Mostrar</button>
+                    <div id="demo8_1" class="collapse">
+                      {% load static %}
+                      {% for i in imagenes %}
+                        <img src="{{i.image.url}}" class="img-thumbnail" alt="{{i.name}}" style="width:250px;">
+                      {% endfor %}
+                      <p>Imagen Corrida</p>
+                    </div>
                   </div>
-                  <div><input type="range" name="Rxval" min="0" max="255" step="1" value="80">
-                  <input type="range" name="Ryval" min="9" max="255" step="1" value="180">
-                  <p>R</p></div>
-                  <div><input type="range" name="Gxval" min="0" max="255" step="1" value="80">
-                  <input type="range" name="Gyval" min="9" max="255" step="1" value="180">
-                  <p>G</p></div>
-                  <div><input type="range" name="Bxval" min="0" max="255" step="1" value="80">
-                  <input type="range" name="Byval" min="9" max="255" step="1" value="180">
-                  <p>B</p></div>
-                  <!-- termina aca  -->
-                  <p>
-                      <input id="id_image" type="file" accept="image/*" name="image" required>
-                  </p>
-                  <p>
-                      Image name:
-                      <input id="id_name" type="text" name="name" required>
-                  </p>
-                  <input type="submit" value="Submit" />
-                </form>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo8_2">Mostrar Resultado</button>
+                    <div id="demo8_2" class="collapse">
+                      {% load static %}
+                        <img src="{{este1}}" class="img-thumbnail" alt="imagen" style="width:250px;">
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo8_3">Mostrar</button>
+                    <div id="demo8_3" class="collapse">
+                      {% load static %}
+                        <img src="{{este}}" class="img-thumbnail" alt="imagen2" style="width:250px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <form action="ecualizacion" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="switch8" name="cascade">
+                        <label class="custom-control-label" for="switch8">Cascade</label>
+                      </div>
+                      <div><input type="text" id="datoC1" name="x1val" required><p>x1val</p></div>
+                      <div><input type="text" id="datoC2" name="x2val" required><p>x2val</p></div>
+                      <div><input type="text" id="datoC3" name="y1val" required><p>y1val</p></div>
+                      <div><input type="text" id="datoC4" name="y2val" required><p>y2val</p></div>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                </div>
               </div>
+
+
+
               <div id="menu9" class="container tab-pane fade"><br>
                 <div class="row">
                   <div class="col-sm-4">

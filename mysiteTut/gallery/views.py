@@ -83,7 +83,7 @@ def upload_image(request):
         print(temp)
         for i in temp:
             print(i.image.url)
-        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/rpta.jpg','pagina':pagina[0]})
+        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/rpta.jpg','este1':'/gallery/Imagenes/gallery/rpta2.jpg','pagina':pagina[0]})
     elif request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -280,19 +280,61 @@ def Logaritmo(request):
             img.itemset((x,y,2),int(p))
     cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
-#def Ecualizacion(request):
-
-    #jug=Image.objects.filter(name=imagen_act[0])
-    #current1=""
+def ecualizacion(request):
+    jug=Image.objects.filter(name=imagen_act[0])
+    current1=""
     #current2=""
-    #for i in jug:
-        #current1=i.image.url
-        #current2=i.image2.url
-    #current1=current1[1:]
-    #current2=current2[1:]
-    #img=cv2.imread(current1)
-    #img2=cv2.imread(current2)
-    #funcion Logaritmo customisada
+    for i in jug:
+        current1=i.image.url
+    current1=current1[1:]
+    if 'cascade' in request.POST:
+        if str(request.POST['cascade'])=="on":
+            current1="gallery/Imagenes/gallery/rpta.jpg"
+    img=cv2.imread(current1)
+    img2=cv2.imread(current1)
+    a=int(request.POST['y1val'])
+    b=int(request.POST['y2val'])
+    c=int(request.POST['x1val'])
+    d=int(request.POST['x2val'])
+    fils=len(img)
+    cols=len(img[0])
+    lista=[[0]*256,[0]*256,[0]*256]
+    cont=fils*cols
+    croppedImage = img[c:d, a:b]
+    img3= cv2.resize(croppedImage, (cols, fils))
+    for x in range(fils):
+        for y in range(cols):
+            lista[0][img3.item(x,y,0)]=lista[0][img3.item(x,y,0)]+1
+            lista[1][img3.item(x,y,1)]=lista[1][img3.item(x,y,1)]+1
+            lista[2][img3.item(x,y,2)]=lista[2][img3.item(x,y,2)]+1
+    L=256
+    p=[[0]*256,[0]*256,[0]*256]
+    for i in range (256):
+        p[0][i]=lista[0][i]/cont
+        p[1][i]=lista[1][i]/cont
+        p[2][i]=lista[2][i]/cont
+    nueva=[[0]*256,[0]*256,[0]*256]
+    print([sum(i) for i in p])
+    for i in range (256):
+        suma=[0,0,0]
+        for j in range(i+1):
+            suma[0]=suma[0]+p[0][j]
+            suma[1]=suma[1]+p[1][j]
+            suma[2]=suma[2]+p[2][j]
+        suma[0]=math.floor(suma[0]*(L-1))
+        suma[1]=math.floor(suma[1]*(L-1))
+        suma[2]=math.floor(suma[2]*(L-1))
+        nueva[0][i]=suma[0]
+        nueva[1][i]=suma[1]
+        nueva[2][i]=suma[2]
+    for x in range(fils):
+        for y in range(cols):
+            img2.itemset((x,y,0),nueva[0][img.item(x,y,0)])
+            img2.itemset((x,y,1),nueva[1][img.item(x,y,1)])
+            img2.itemset((x,y,2),nueva[2][img.item(x,y,2)])
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img3)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img2)
+    return HttpResponseRedirect('/gallery/upload_image/')
 
 def Exponencial(request):
     jug=Image.objects.filter(name=imagen_act[0])
