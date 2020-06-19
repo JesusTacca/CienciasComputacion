@@ -84,10 +84,10 @@ def XOR(num1,num2):
     value = ''
 
     for i in range (0,rango):
-        if(num1[rango-1-i] == num2[rango-1-i]):
-            value = '0' + value
+        if(num1[i] == num2[i]):
+            value = value+'0'
         else:
-            value = '1' + value
+            value = value+'1'
     return value
 def notB(num):
     return 255-num
@@ -104,7 +104,7 @@ def upload_image(request):
         print(temp)
         for i in temp:
             print(i.image.url)
-        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/rpta.jpg','este1':'/gallery/Imagenes/gallery/rpta2.jpg','pagina':pagina[0]})
+        return render(request, 'upload_image.html', {'imagenes': temp,'este':'/gallery/Imagenes/gallery/rpta2.jpg','pagina':pagina[0]})
     elif request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -125,7 +125,7 @@ def thresholding(request):
     current1=current1[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
 
     Rxval=int(request.POST['Rxval'])
@@ -155,7 +155,7 @@ def thresholding(request):
                 img.itemset((x, y, 2), 255)
             else:
                 img.itemset((x, y, 2), 0)
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 def blending(request):
     jug=Image.objects.filter(name=imagen_act[0])
@@ -168,7 +168,7 @@ def blending(request):
     current2=current2[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -185,7 +185,7 @@ def blending(request):
             img.itemset((x,y,1),x1)
             x1=abs(math.floor(img.item(x,y,2)*(C))  +  math.floor(img2.item(x,y,2)*(1-C)))
             img.itemset((x,y,2),x1)
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 def raiz(request):
     jug=Image.objects.filter(name=imagen_act[0])
@@ -195,7 +195,7 @@ def raiz(request):
     current1=current1[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     fils = len(img)
     cols = len(img[0])
@@ -224,7 +224,7 @@ def raiz(request):
                 p=0
             img.itemset((x,y,2),int(p))
     #fin de la funcion
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 def raiztopower(request):
     jug=Image.objects.filter(name=imagen_act[0])
@@ -234,7 +234,7 @@ def raiztopower(request):
     current1=current1[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     fils = len(img)
     cols = len(img[0])
@@ -264,7 +264,7 @@ def raiztopower(request):
                 p=0
             img.itemset((x,y,2),int(p))
     #fin de la funcion
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 def Logaritmo(request):
     jug=Image.objects.filter(name=imagen_act[0])
@@ -274,7 +274,7 @@ def Logaritmo(request):
     current1=current1[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     fils = len(img)
     cols = len(img[0])
@@ -299,7 +299,7 @@ def Logaritmo(request):
             if p<0:
                 p=0
             img.itemset((x,y,2),int(p))
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 def ecualizacion(request):
     jug=Image.objects.filter(name=imagen_act[0])
@@ -310,7 +310,7 @@ def ecualizacion(request):
     current1=current1[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current1)
     a=int(request.POST['y1val'])
@@ -353,8 +353,7 @@ def ecualizacion(request):
             img2.itemset((x,y,0),nueva[0][img.item(x,y,0)])
             img2.itemset((x,y,1),nueva[1][img.item(x,y,1)])
             img2.itemset((x,y,2),nueva[2][img.item(x,y,2)])
-    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img3)
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img2)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img2)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 def Exponencial(request):
@@ -366,7 +365,7 @@ def Exponencial(request):
     current1=current1[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     fils = len(img)
     cols = len(img[0])
@@ -393,7 +392,7 @@ def Exponencial(request):
                 p=0
             img.itemset((x,y,2),int(p))
     #fin de la funcion
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 def multiplicacion(request):
@@ -405,7 +404,7 @@ def multiplicacion(request):
     print("$$$$$$",request.POST,"$$$$$$$$")
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     a=len(img)
     b=len(img[0])
@@ -427,7 +426,7 @@ def multiplicacion(request):
                 p=255
             img.itemset((x,y,2),p)
 
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 def division(request):
@@ -442,7 +441,7 @@ def division(request):
     C=int(request.POST['cval'])
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -487,7 +486,7 @@ def division(request):
             img.itemset((x,y,1),t)
             t=(img.item(x,y,2)-c3)*((B-A)/(d3-c3))+A
             img.itemset((x,y,2),t)
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 def contrast(request):
@@ -498,7 +497,7 @@ def contrast(request):
     current1=current1[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current1)
     fils=len(img)
@@ -543,7 +542,7 @@ def contrast(request):
                 t=255
             img2.itemset((x, y,2), t)
     img = img2
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 def substracion(request):
@@ -557,7 +556,7 @@ def substracion(request):
     current2=current2[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -581,7 +580,7 @@ def substracion(request):
                 img.itemset((x,y,2),0)
             else:
                 img.itemset((x,y,2),p)
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 
@@ -596,7 +595,7 @@ def adicion(request):
     current2=current2[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -613,7 +612,7 @@ def adicion(request):
             img.itemset((x,y,1),p)
             p=int(img.item(x,y,2)/2+img2.item(x,y,2)/2)
             img.itemset((x,y,2),p)
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 def binari_and(request):
@@ -627,7 +626,7 @@ def binari_and(request):
     current2=current2[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -639,7 +638,7 @@ def binari_and(request):
             img.itemset( (x,y,0),deci( andB( binP(img.item(x,y,0)) , binP(img2.item(x,y,0)) ) ) )
             img.itemset( (x,y,1),deci( andB( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) ) )
             img.itemset( (x,y,2),deci( andB( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) ) )
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 
@@ -654,7 +653,7 @@ def binari_nand(request):
     current2=current2[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -667,7 +666,7 @@ def binari_nand(request):
             img.itemset( (x,y,1), notB( deci( andB( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) )  ))
             img.itemset( (x,y,2), notB( deci( andB( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) )  ))
 
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 def binari_or(request):
@@ -681,7 +680,7 @@ def binari_or(request):
     current2=current2[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -693,7 +692,7 @@ def binari_or(request):
             img.itemset( (x,y,0),deci( OR( binP(img.item(x,y,0)) , binP(img2.item(x,y,0)) ) ) )
             img.itemset( (x,y,1),deci( OR( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) ) )
             img.itemset( (x,y,2),deci( OR( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) ) )
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
 
 
@@ -708,7 +707,7 @@ def binari_xor(request):
     current2=current2[1:]
     if 'cascade' in request.POST:
         if str(request.POST['cascade'])=="on":
-            current1="gallery/Imagenes/gallery/rpta.jpg"
+            current1="gallery/Imagenes/gallery/rpta2.jpg"
     img=cv2.imread(current1)
     img2=cv2.imread(current2)
     a=max(len(img),len(img2))
@@ -721,5 +720,5 @@ def binari_xor(request):
             img.itemset( (x,y,1), ( deci( XOR( binP(img.item(x,y,1)) , binP(img2.item(x,y,1)) ) )  ))
             img.itemset( (x,y,2), ( deci( XOR( binP(img.item(x,y,2)) , binP(img2.item(x,y,2)) ) )  ))
 
-    cv2.imwrite('gallery/Imagenes/gallery/rpta.jpg',img)
+    cv2.imwrite('gallery/Imagenes/gallery/rpta2.jpg',img)
     return HttpResponseRedirect('/gallery/upload_image/')
