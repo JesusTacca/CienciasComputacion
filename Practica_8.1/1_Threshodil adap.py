@@ -37,7 +37,7 @@ img=cv2.resize(img,(b1,a1))
 img2=cv2.resize(img2,(b1,a1))
 print(a1,b1)
 c=2
-w_s=11
+w_s=7
 
 for i in range(a1):
     for j in range(b1):
