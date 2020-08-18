@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container" style="margin-left:30px; margin-right:30px;">
+    <div class="row">
+      <div id="imagen1" class="jumbotron col-sm-8">
+      </div>
+      <div id="textSection" class="col-sm-4">
+        <input type="file" id="file-inputx"/>
+        <input type="file" id="file-inputy"/>
+        <input type="file" id="file-inputz"/>
+        <button onclick="actualizar()">actualizar</button>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block javascript %}
+<script>
+  var x1 = [];
+  var y1 = [];
+  var z1 = [];
+  function leerArchivo1(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+      var contenido = e.target.result;
+      console.log(contenido)
+      var temp = contenido.split('\n');
+      for(let i of temp){
+        x1.push(parseFloat(i))
+      }
+    };
+    lector.readAsText(archivo);
+  }
+  function leerArchivo2(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+      var contenido = e.target.result;
+      console.log(contenido)
+      var temp = contenido.split('\n');
+      for(let i of temp){
+        y1.push(parseFloat(i))
+      }
+    };
+    lector.readAsText(archivo);
+  }
+  function leerArchivo3(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+      var contenido = e.target.result;
+      console.log(contenido)
+      var temp = contenido.split('\n');
+      for(let i of temp){
+        z1.push(parseFloat(i))
+      }
+    };
+    lector.readAsText(archivo);
+  }
+
+  document.getElementById('file-inputx')
+    .addEventListener('change', leerArchivo1, false);
+  document.getElementById('file-inputy')
+    .addEventListener('change', leerArchivo2, false);
+  document.getElementById('file-inputz')
+    .addEventListener('change', leerArchivo3, false);
+</script>
+<script>
+var limit= 1;
+var x = [];
+var y = [];
+var z = [];
+var rawFile1 = new XMLHttpRequest();
+var rawFile2 = new XMLHttpRequest();
+var rawFile3 = new XMLHttpRequest();
+function readTextFile() {
+     rawFile1.open("GET", "/media/PuntosX.txt", true);
+     rawFile2.open("GET", "/media/PuntosY.txt", true);
+     rawFile3.open("GET", "/media/PuntosZ.txt", true);
+     rawFile1.onreadystatechange = function() {
+       if (rawFile1.readyState === 4) {
+         var allText = rawFile1.responseText;
+         var temp = allText.split('\n');
+         for(let i of temp){
+           x.push(parseFloat(i)*limit)
+         }
+       }
+     }
+     rawFile1.send();
+     rawFile2.onreadystatechange = function() {
+       if (rawFile2.readyState === 4) {
+         var allText = rawFile2.responseText;
+         var temp = allText.split('\n');
+         for(let i of temp){
+           y.push(parseFloat(i)*limit)
+         }
+       }
+     }
+     rawFile2.send();
+     rawFile3.onreadystatechange = function() {
+       if (rawFile3.readyState === 4) {
+         var allText = rawFile3.responseText;
+         var temp = allText.split('\n');
+         for(let i of temp){
+           z.push(parseFloat(i)*limit)
+         }
+       }
+     }
+     rawFile3.send();
+}
+readTextFile();
+console.log(x);
+console.log(y);
+console.log(z);
+var boxSz = 250;
+var numSpheres = 5;
+var t = 0.0;
+var xmin=Infinity;
+var ymin=Infinity;
+var zmin=Infinity;
+var xmax=-Infinity;
+var ymax=-Infinity;
+var zmax=-Infinity;
+/*
+xmin --- 0
+xmax --- 1000
+*/
+function actualizar(){
+  x=x1;
+  y=y1;
+  z=z1;
+  for(let i=0; i<x.length;i++){
+  if(xmin>x[i]){xmin=x[i];}
+  if(ymin>y[i]){ymin=y[i];}
+  if(zmin>z[i]){zmin=z[i];}
+  if(xmax<x[i]){xmax=x[i];}
+  if(ymax<y[i]){ymax=y[i];}
+  if(zmax<z[i]){zmax=z[i];}
+  }
+  for(let i=0; i<x.length;i++){
+    x[i]=(boxSz*2)*((x[i]-xmin)/(xmax-xmin))-boxSz;
+    y[i]=(boxSz*2)*((y[i]-ymin)/(ymax-ymin))-boxSz;
+    z[i]=(boxSz*2)*((z[i]-zmin)/(zmax-zmin))-boxSz;
+  }
+}
+function setup() {
+  var w=500;
+  var h=500;
+  var canvas=createCanvas(w, h, WEBGL);
+  canvas.parent('imagen1');
+  background(0);
+  for(let i=0; i<x.length;i++){
+  if(xmin>x[i]){xmin=x[i];}
+  if(ymin>y[i]){ymin=y[i];}
+  if(zmin>z[i]){zmin=z[i];}
+  if(xmax<x[i]){xmax=x[i];}
+  if(ymax<y[i]){ymax=y[i];}
+  if(zmax<z[i]){zmax=z[i];}
+  }
+  for(let i=0; i<x.length;i++){
+    x[i]=(boxSz*2)*((x[i]-xmin)/(xmax-xmin))-boxSz;
+    y[i]=(boxSz*2)*((y[i]-ymin)/(ymax-ymin))-boxSz;
+    z[i]=(boxSz*2)*((z[i]-zmin)/(zmax-zmin))-boxSz;
+  }
+}
+
+function draw() {
+  background(255,255,255);
+  //translate(0,0,-100);
+  rotateY(frameCount * 0.01);
+
+  stroke(150);
+  //front
+  line(-boxSz, -boxSz, boxSz, boxSz, -boxSz, boxSz);
+  line(-boxSz, boxSz, boxSz, boxSz, boxSz, boxSz);
+  line(-boxSz, -boxSz, boxSz, -boxSz, boxSz, boxSz);
+  line(boxSz, -boxSz, boxSz, boxSz, boxSz, boxSz);
+
+  //back
+  line(-boxSz, -boxSz, -boxSz, boxSz, -boxSz, -boxSz);
+  line(-boxSz, boxSz, -boxSz, boxSz, boxSz, -boxSz);
+  line(-boxSz, -boxSz, -boxSz, -boxSz, boxSz, -boxSz);
+  line(boxSz, -boxSz, -boxSz, boxSz, boxSz, -boxSz);
+
+  //left top
+  line(-boxSz, -boxSz, boxSz, -boxSz, -boxSz, -boxSz);
+  //left bottom
+  line(-boxSz, boxSz, -boxSz, -boxSz, boxSz, boxSz);
+  //right top
+  line(boxSz, -boxSz, boxSz, boxSz, -boxSz, -boxSz);
+  // // right bottom
+  line(boxSz, boxSz, -boxSz, boxSz, boxSz, boxSz);
+
+  for (var i = 0; i < x.length; i++) {
+    push();
+    translate(x[i], -y[i], z[i]);
+    sphere(boxSz / 50, 8);
+    pop();
+  }
+
+}
+</script>
+{% endblock javascript %}
